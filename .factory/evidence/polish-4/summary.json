@@ -1,0 +1,35 @@
+{
+  "repair_commit": "475037718fe5a6ddbe40568a704494dc3437aef1",
+  "test_guard_commit": "5556cd6d65639667bacfcc8b02feedeee1fd2138",
+  "clean_clone": "/tmp/signal-check-polish-4-final-fNjzGN/repo",
+  "npm_ci": "passed; 0 vulnerabilities",
+  "npm_test": {
+    "unit": "7 passed",
+    "browser": "29 passed, 15 intentional project skips"
+  },
+  "claim_commands": "14 of 14 passed independently",
+  "live_site_tests": "18 passed, 8 intentional project skips",
+  "deployment_id": "5ca499b9-18ec-4153-82ec-069a529d2c0c",
+  "live_url": "https://color-meaning-audit.sociobot.in/",
+  "lighthouse_live": {
+    "performance": 100,
+    "accessibility": 100,
+    "best_practices": 100,
+    "seo": 100,
+    "fcp": "0.9 s",
+    "lcp": "1.1 s",
+    "total_blocking_time": "0 ms",
+    "cumulative_layout_shift": 0,
+    "transfer": "34 KiB"
+  },
+  "http": {
+    "/": 200,
+    "/demo/?demo=1": 200,
+    "/privacy/": 200,
+    "/terms/": 200,
+    "/404.html": 200,
+    "/not-a-real-route": 404,
+    "/downloads/signal-check-chrome.zip": 200
+  },
+  "extension_zip_sha256": "f97d63d22525f28f31758fcdc91a9fe30973c8e88f7fe760c1715c2a52399701"
+}

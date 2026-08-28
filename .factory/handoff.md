@@ -1,51 +1,33 @@
-# Review 4 handoff — Signal Check
-
-## Current review outcome
-
-No product code was changed. [Review 4](review-4.md) records a **FAIL** with one
-minor plain-words finding: the README test explanation uses the unexplained term
-“Xvfb” (F-4-1). This review contract requires zero findings for PASS.
-
-Fresh live Chromium checks at 390×844 and 1440×900 found a clear first read, a
-working isolated demo, same-origin demo traffic, correct reset/exit storage
-isolation, and no console errors. A literal clean temporary clone ran `npm ci`
-and every one of the 14 exact claim commands successfully. The current checkout
-also passed `npm test` (typecheck, 5 unit tests, build/package, 44 Playwright
-tests) and `npm run build`.
-
-Next: replace the README Xvfb sentence with the concrete plain-language rewrite
-in `review-4.md`, then rerun the copy and clean-clone claims checks.
-
-## Previous round 3 handoff
+# Signal Check — round 4 handoff
 
 ## Outcome
 
-Round 3 is complete and redeployed at <https://color-meaning-audit.sociobot.in/>. The shipped artifact remains a WXT TypeScript Manifest V3 browser extension with a static Vite site and downloadable ZIP.
+Perfection-loop round 4 is complete and deployed at <https://color-meaning-audit.sociobot.in/>. The artifact remains a WXT TypeScript Manifest V3 browser extension with a static Vite site and downloadable ZIP.
 
-The core correction is semantic. Signal Check no longer treats arbitrary text from a nearby status row as a label for a colored mark. Only an explicit accessible name (`aria-label`, `title`, or `aria-labelledby`, including a named graphic owner) can trigger written-label guidance. The sample now truthfully says no nearby text label was found. A packaged-extension regression proves both unlabeled service rows and explicitly named Ready/Blocked marks.
+The sole new finding, F-4-1, is fixed. The README now says what the Linux browser test does without using the unexplained runner name. A unit regression protects that wording. The complete landing and README audit is in `.factory/copy-audit.md`.
 
-The first-screen support copy is one 19-word audience-and-change sentence. Remaining “browser key,” “field-note overlay,” and “selected comparison” wording was removed from visitor UI. The complete current README is recorded in `.factory/copy-audit.md`. Version/build is 1.0.3, and the catalog description is the 64-character verb-first sentence “Find color-only signals in charts and dashboards before you act.”
+Every earlier finding was rechecked. The first screen states the job, audience, and sample result. `/demo/?demo=1` opens an isolated sample with a persistent banner, Reset demo, Start for real, and truthful no-label guidance. Titles, metadata, focus, Back behavior, legal links, the designed 404, 390 px layout, touch targets, privacy, offline behavior, and all 14 claim contracts pass. The careful-lab-notebook visual system and browser-extension/static-site architecture are unchanged.
 
-The controller-reported Chromium SIGSEGV did not recur. Playwright 1.58.2 completed twice with newly launched Chrome for Testing 145 contexts from a clean clone. No additional product defect was found.
+Build/version is 1.0.4. The catalog description is the 66-character verb-first sentence: “Check charts and dashboards for color-only meaning before you act.”
 
 ## Verification
 
-- Final clean clone: `/tmp/signal-check-polish-3-infra-retry-GohrcN/repo` at `b8f57c38ce1f5e68a0b15ca69d82d906622eb587`.
-- `npm ci`: passed; 0 vulnerabilities.
-- `npm test`: passed; TypeScript, 5 Vitest tests, extension/site/ZIP builds, 29 Playwright tests passed, and 15 intentional mobile duplicates of desktop-only claim tests skipped.
-- Every one of the 14 commands in `.factory/claims.json`: passed independently from that clean clone. See `.factory/evidence/polish-3-infra-retry/claims-clean/` and `summary.json`.
-- Privacy: `@claim:extension-local-check` ran the packaged capture/analyze/inject flow with zero HTTP(S) requests. `@claim:demo-first-party` observed only the product origin.
-- Offline: `@claim:demo-offline` passed after service-worker control. `@claim:extension-offline` completed a packaged visible-page check with the browser context offline.
-- Accessibility/browser: Axe found zero serious/critical violations on `/`, `/demo/`, `/privacy/`, `/terms/`, and `/404.html` at desktop and 390 px. The fresh live site suite passed 18 tests with 8 intentional claim duplicates skipped.
-- Cold live checks: `verify-url.sh` launched a new browser for every route and reported no console/page errors, one h1, `lang=en`, a main landmark, complete image alt text, and named buttons. Fresh desktop/mobile screenshots are under `.factory/evidence/polish-3-infra-retry/live-*`.
-- Routing: `/`, `/demo/?demo=1`, `/privacy/`, `/terms/`, `/404.html`, and the ZIP return 200. `/not-a-real-route` returns the designed page with HTTP 404.
-- Mobile: no horizontal overflow; all tested brand, legal, demo-boundary, and color-vision controls are at least 44×44 CSS px.
-- Performance: fresh live Lighthouse scored 100 performance, 100 accessibility, 100 best practices, and 100 SEO. FCP 1.0 s, LCP 1.0 s, TBT 20 ms, and CLS 0.
-- Payload: initial site JavaScript totals 11,107 bytes uncompressed; CSS is 14,075 bytes; the selected AVIF hero is 27,044 bytes.
-- Download integrity: the deployed and local ZIP share SHA-256 `c712c78f57ce3d12044a0eda873e1e8bd08647f026b1c69f0d96e5b9158ee0cc`; its manifest reports version 1.0.3.
-- Deployment: Azure Static Web Apps deployment `b965676f-300b-4b1d-b166-a7e9dd4ccd94` succeeded in `eastus2`; the custom domain reported Ready and HTTPS 200.
+- Repair commits: `475037718fe5a6ddbe40568a704494dc3437aef1` and `5556cd6d65639667bacfcc8b02feedeee1fd2138`.
+- Clean clone: `/tmp/signal-check-polish-4-final-fNjzGN/repo` at `5556cd6d65639667bacfcc8b02feedeee1fd2138`, initially without `node_modules` or `dist`.
+- `npm ci`: passed; 263 packages installed and zero vulnerabilities reported.
+- `npm test`: passed TypeScript, 7 unit tests, clean production builds, output validation, and 29 browser tests; 15 mobile duplicates of desktop-only claim tests were intentionally skipped. Evidence: `.factory/evidence/polish-4/npm-test-clean.log`.
+- Claims: all 14 exact `.factory/claims.json` commands passed independently in the clean clone. Evidence: `.factory/evidence/polish-4/claims-clean/`.
+- Build/package: `npm run build`, `unzip -t`, and `npm audit --omit=dev` passed. The build produced `dist/extension/chrome-mv3`, `dist/site`, and the download ZIP.
+- Browser/accessibility: the live site suite passed 18 tests with 8 intentional claim duplicates skipped. Playwright axe found zero serious or critical issues on home, demo, privacy, terms, and 404 at desktop and 390×844. Evidence: `.factory/evidence/polish-4/site-live.log`.
+- Cold live checks: `verify-url.sh` opened every public route in fresh browsers. Each report has the right title, `lang=en`, one h1, one main, no missing image alt, no unnamed buttons, and zero console errors. Screenshots and reports are under `.factory/evidence/polish-4/live-*`.
+- Privacy/offline: `@claim:extension-local-check` observed zero HTTP(S) requests during the packaged capture/analyze/inject flow. `@claim:demo-first-party` observed only the product origin. Both demo and extension offline claims passed.
+- Routing/links: home, demo, privacy, terms, 404, download, source, and issue destinations returned 200. `/not-a-real-route` returned HTTP 404 with the designed recovery page.
+- Performance: live mobile Lighthouse scored 100 performance, 100 accessibility, 100 best practices, and 100 SEO. FCP was 0.9 s, LCP 1.1 s, TBT 0 ms, CLS 0, and transfer 34 KiB. Evidence: `.factory/evidence/polish-4/lighthouse-live.json`.
+- Budgets: complete emitted site JS 11.08 KB, CSS 14.07 KB, fonts 0 KB, mobile hero WebP 24.81 KB, AVIF hero 27.04 KB, and unpacked extension 27.53 KB.
+- Deployment: Azure Static Web Apps deployment `5ca499b9-18ec-4153-82ec-069a529d2c0c` succeeded in `eastus2`; the custom domain is Ready and HTTPS returns 200.
+- Artifact identity: local and live ZIP SHA-256 is `f97d63d22525f28f31758fcdc91a9fe30973c8e88f7fe760c1715c2a52399701`. Its manifest reports version 1.0.4 with only `activeTab`, `scripting`, and `storage` permissions and no host permissions.
 
-Fresh retry evidence is under `.factory/evidence/polish-3-infra-retry/`. The full finding map is `.factory/polish-3.md`.
+The full finding map is `.factory/polish-4.md`. No reviewed finding, known product gap, or required follow-up remains.
 
 ## Run and verify
 
@@ -55,13 +37,8 @@ npm test
 npm run build
 ```
 
-To recheck one claim, run its exact `test` command from `.factory/claims.json`. Deploy `dist/site` with:
+Run any individual claim with its exact `.factory/claims.json` command. Deploy `dist/site` with:
 
 ```sh
 /opt/fleet/lib/deploy-static.sh color-meaning-audit dist/site
 ```
-
-## Historical round 3 status
-
-Round 3 found no remaining product-behavior defect. Review 4 supersedes that
-status with the documented F-4-1 README plain-language finding above.

@@ -1,0 +1,156 @@
+
+> signal-check@1.0.4 test
+> npm run typecheck && vitest run && npm run prepare:test && npm run test:e2e
+
+
+> signal-check@1.0.4 typecheck
+> wxt prepare && tsc --noEmit
+
+
+WXT 0.21.4
+ℹ Generating types...
+✔ Finished in 258 ms
+
+ RUN  v4.1.11 /tmp/signal-check-polish-4-final-fNjzGN/repo
+
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  14:11:32
+   Duration  264ms (transform 95ms, setup 0ms, import 124ms, tests 18ms, environment 0ms)
+
+
+> signal-check@1.0.4 prepare:test
+> npm run clean && npm run build:extension && npm run build:site && npm run package:extension && node scripts/verify-site-output.mjs
+
+
+> signal-check@1.0.4 clean
+> node scripts/clean.mjs
+
+
+> signal-check@1.0.4 build:extension
+> wxt build
+
+
+WXT 0.21.4
+ℹ Building chrome-mv3 for production with Vite 8.2.2
+[?25l⠋ Preparing...[K⠋ [1/2] background[K⠋ [2/2] popup[K⠙ [2/2] popup[K[K[?25h[K[?25h✔ Built extension in 256 ms
+  ├─ dist/extension/chrome-mv3/manifest.json              521 B   
+  ├─ dist/extension/chrome-mv3/popup.html                 2.06 kB 
+  ├─ dist/extension/chrome-mv3/background.js              508 B   
+  ├─ dist/extension/chrome-mv3/chunks/popup-CeBc1w6s.js   13.66 kB
+  ├─ dist/extension/chrome-mv3/assets/popup-BXADcy8j.css  3.40 kB 
+  ├─ dist/extension/chrome-mv3/icon/128.png               3.74 kB 
+  ├─ dist/extension/chrome-mv3/icon/16.png                509 B   
+  ├─ dist/extension/chrome-mv3/icon/32.png                987 B   
+  ├─ dist/extension/chrome-mv3/icon/48.png                1.50 kB 
+  └─ dist/extension/chrome-mv3/icon/source.svg            644 B   
+Σ Total size: 27.53 kB                                  
+✔ Finished in 407 ms
+
+> signal-check@1.0.4 build:site
+> vite build --config site/vite.config.ts
+
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 13 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/site/404.html                                  2.59 kB │ gzip: 0.99 kB
+dist/site/sw.js                                     3.34 kB
+dist/site/terms/index.html                          3.37 kB │ gzip: 1.36 kB
+dist/site/privacy/index.html                        3.75 kB │ gzip: 1.45 kB
+dist/site/demo/index.html                           4.95 kB │ gzip: 1.75 kB
+dist/site/index.html                                6.73 kB │ gzip: 2.28 kB
+dist/site/assets/hero-notebook-760-DhXhs_Ud.webp   24.81 kB
+dist/site/assets/hero-notebook-KyRBVpV8.avif       27.04 kB
+dist/site/assets/hero-notebook-Df-u7aeu.webp       63.42 kB
+dist/site/assets/hero-notebook-C5fpx6uo.jpg       145.59 kB
+dist/site/assets/site-fOTvjyHM.css                 14.07 kB │ gzip: 4.02 kB
+dist/site/assets/legal-DbmTydbt.js                  0.02 kB │ gzip: 0.04 kB
+dist/site/assets/main-DMM9R5K5.js                   0.11 kB │ gzip: 0.12 kB
+dist/site/assets/site-_0AzO6u4.js                   0.95 kB │ gzip: 0.52 kB
+dist/site/assets/demo-MsQAnQMn.js                  10.00 kB │ gzip: 4.22 kB
+
+✓ built in 116ms
+
+> signal-check@1.0.4 package:extension
+> node scripts/package-extension.mjs
+
+Packaged /tmp/signal-check-polish-4-final-fNjzGN/repo/dist/site/downloads/signal-check-chrome.zip
+Verified fingerprinted assets and static-host cache policy.
+
+> signal-check@1.0.4 test:e2e
+> xvfb-run -a playwright test
+
+[1A[2K[2m[WebServer] [22m(node:21052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1A[2K[2m[WebServer] [22m(node:21065) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 44 tests using 1 worker
+
+[1A[2K(node:21083) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:21083) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/44] [chromium] › tests/e2e/overlay.spec.ts:18:1 › the palette overlay opens accessible check notes with alternate-cue guidance
+[1A[2K[2/44] [chromium] › tests/e2e/overlay.spec.ts:35:1 › the overlay renderer uses no HTTP requests while it builds check notes
+[1A[2K[3/44] [chromium] › tests/e2e/overlay.spec.ts:43:1 › narrow Locate keeps the highlighted source visible and lets people return to the notes
+[1A[2K[4/44] [chromium] › tests/e2e/popup.spec.ts:148:1 › @claim:extension-clear clears the stored last result in one action
+[1A[2K[5/44] [chromium] › tests/e2e/popup.spec.ts:224:1 › @claim:extension-local-storage saves the chosen view and last result in extension-local storage
+[1A[2K[6/44] [chromium] › tests/e2e/popup.spec.ts:248:1 › @claim:extension-check-notes uses only explicit status labels as text cues
+[1A[2K[7/44] [chromium] › tests/e2e/popup.spec.ts:272:1 › @claim:extension-local-check runs the packaged visible-page check without HTTP requests
+[1A[2K[8/44] [chromium] › tests/e2e/popup.spec.ts:293:1 › @claim:extension-offline completes a visible-page check while offline
+[1A[2K[9/44] [chromium] › tests/e2e/popup.spec.ts:309:1 › @claim:color-vision-views checks every selectable view through the packaged extension
+[1A[2K[10/44] [chromium] › tests/e2e/site.spec.ts:14:1 › @claim:free-download downloads the packaged extension directly
+[1A[2K[11/44] [chromium] › tests/e2e/site.spec.ts:22:1 › @claim:no-account-screen opens the sample without sign-in or form fields
+[1A[2K[12/44] [chromium] › tests/e2e/site.spec.ts:28:1 › @claim:demo-warning opens the real check-note overlay on sample status data
+[1A[2K[13/44] [chromium] › tests/e2e/site.spec.ts:41:1 › @claim:demo-isolation keeps sample state in a demo namespace
+[1A[2K[14/44] [chromium] › tests/e2e/site.spec.ts:48:1 › @claim:demo-reset removes and recreates only sample state
+[1A[2K[15/44] [chromium] › tests/e2e/site.spec.ts:58:1 › @claim:demo-exit discards sample state when starting for real
+[1A[2K[16/44] [chromium] › tests/e2e/site.spec.ts:65:1 › @claim:demo-first-party requests only this site during the demo flow
+[1A[2K[17/44] [chromium] › tests/e2e/site.spec.ts:75:1 › @claim:demo-offline reloads the sample after its first visit
+[1A[2K[18/44] [chromium] › tests/e2e/site.spec.ts:89:1 › routes provide titles, metadata, focus, and an explicit not-found page
+[1A[2K[19/44] [chromium] › tests/e2e/site.spec.ts:112:1 › main, demo, legal, and not-found pages have no serious accessibility findings
+[1A[2K[20/44] [chromium] › tests/e2e/site.spec.ts:121:1 › responsive layout has no horizontal overflow and keeps every core target at least 44px
+[1A[2K[21/44] [chromium] › tests/e2e/site.spec.ts:153:1 › primary demo wording names its result and the query entry opens the isolated route
+[1A[2K[22/44] [chromium] › tests/e2e/site.spec.ts:167:1 › real links, reload, and browser Back preserve route titles and heading focus
+[1A[2K(node:22321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:22321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[23/44] [mobile] › tests/e2e/overlay.spec.ts:18:1 › the palette overlay opens accessible check notes with alternate-cue guidance
+[1A[2K[24/44] [mobile] › tests/e2e/overlay.spec.ts:35:1 › the overlay renderer uses no HTTP requests while it builds check notes
+[1A[2K[25/44] [mobile] › tests/e2e/overlay.spec.ts:43:1 › narrow Locate keeps the highlighted source visible and lets people return to the notes
+[1A[2K[26/44] [mobile] › tests/e2e/popup.spec.ts:148:1 › @claim:extension-clear clears the stored last result in one action
+[1A[2K[27/44] [mobile] › tests/e2e/popup.spec.ts:224:1 › @claim:extension-local-storage saves the chosen view and last result in extension-local storage
+[1A[2K[28/44] [mobile] › tests/e2e/popup.spec.ts:248:1 › @claim:extension-check-notes uses only explicit status labels as text cues
+[1A[2K[29/44] [mobile] › tests/e2e/popup.spec.ts:272:1 › @claim:extension-local-check runs the packaged visible-page check without HTTP requests
+[1A[2K[30/44] [mobile] › tests/e2e/popup.spec.ts:293:1 › @claim:extension-offline completes a visible-page check while offline
+[1A[2K[31/44] [mobile] › tests/e2e/popup.spec.ts:309:1 › @claim:color-vision-views checks every selectable view through the packaged extension
+[1A[2K[32/44] [mobile] › tests/e2e/site.spec.ts:14:1 › @claim:free-download downloads the packaged extension directly
+[1A[2K[33/44] [mobile] › tests/e2e/site.spec.ts:22:1 › @claim:no-account-screen opens the sample without sign-in or form fields
+[1A[2K[34/44] [mobile] › tests/e2e/site.spec.ts:28:1 › @claim:demo-warning opens the real check-note overlay on sample status data
+[1A[2K[35/44] [mobile] › tests/e2e/site.spec.ts:41:1 › @claim:demo-isolation keeps sample state in a demo namespace
+[1A[2K[36/44] [mobile] › tests/e2e/site.spec.ts:48:1 › @claim:demo-reset removes and recreates only sample state
+[1A[2K[37/44] [mobile] › tests/e2e/site.spec.ts:58:1 › @claim:demo-exit discards sample state when starting for real
+[1A[2K[38/44] [mobile] › tests/e2e/site.spec.ts:65:1 › @claim:demo-first-party requests only this site during the demo flow
+[1A[2K[39/44] [mobile] › tests/e2e/site.spec.ts:75:1 › @claim:demo-offline reloads the sample after its first visit
+[1A[2K[40/44] [mobile] › tests/e2e/site.spec.ts:89:1 › routes provide titles, metadata, focus, and an explicit not-found page
+[1A[2K[41/44] [mobile] › tests/e2e/site.spec.ts:112:1 › main, demo, legal, and not-found pages have no serious accessibility findings
+[1A[2K[42/44] [mobile] › tests/e2e/site.spec.ts:121:1 › responsive layout has no horizontal overflow and keeps every core target at least 44px
+[1A[2K[43/44] [mobile] › tests/e2e/site.spec.ts:153:1 › primary demo wording names its result and the query entry opens the isolated route
+[1A[2K[44/44] [mobile] › tests/e2e/site.spec.ts:167:1 › real links, reload, and browser Back preserve route titles and heading focus
+[1A[2K  15 skipped
+  29 passed (32.7s)

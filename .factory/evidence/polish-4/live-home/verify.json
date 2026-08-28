@@ -1,0 +1,14 @@
+{
+  "url": "https://color-meaning-audit.sociobot.in/",
+  "loadMs": 1050,
+  "errors": [],
+  "a11y": {
+    "title": "Signal Check — check color-only meaning",
+    "lang": "en",
+    "h1": 1,
+    "main": true,
+    "imgsMissingAlt": 0,
+    "buttonsUnlabeled": 0,
+    "textLength": 1675
+  }
+}
