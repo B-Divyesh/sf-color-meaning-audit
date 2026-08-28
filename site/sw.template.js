@@ -5,9 +5,15 @@ const OFFLINE_DEMO = `<!doctype html><html lang="en"><head><meta charset="utf-8"
 </style></head><body><aside class="banner" aria-label="Demo controls"><strong>Demo — sample data, nothing is saved to your real checks.</strong><span id="state" aria-live="polite">Offline sample loaded.</span><button id="reset" type="button">Reset demo</button><a id="start" href="/install/?download=1">Start for real</a></aside><main class="wrap"><p class="eyebrow">Offline sample workspace</p><h1>A warning is already open.</h1><p class="intro">The Northstar sample and its privacy boundary are available without a connection.</p><section class="workspace" aria-labelledby="dashboard-title"><h2 id="dashboard-title">Launch status dashboard</h2><p>The round marks use color but no written state.</p><ul class="statuses" aria-label="Sample launch checks"><li><span class="dot good" aria-hidden="true"></span><span><strong>Billing handshake</strong><small>Region 1</small></span><time>09:42 UTC</time></li><li><span class="dot blocked" aria-hidden="true"></span><span><strong>Token refresh</strong><small>Region 2</small></span><time>09:43 UTC</time></li><li><span class="dot good" aria-hidden="true"></span><span><strong>Webhook delivery</strong><small>Region 3</small></span><time>09:44 UTC</time></li></ul></section><aside id="signal-check-overlay-host"><section class="note" role="dialog" aria-labelledby="note-title"><p class="eyebrow">Signal Check · red-green</p><h2 id="note-title">1 signal to verify</h2><p><strong>Two nearby signals may look alike.</strong></p><p>No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.</p><button type="button" disabled>Locate these signals</button></section></aside></main><script>const key='demo:signal-check:sample-state',save=()=>localStorage.setItem(key,JSON.stringify({model:'deutan',offline:true,openedAt:Date.now()}));save();document.querySelector('#reset').onclick=()=>{localStorage.removeItem(key);save();document.querySelector('#state').textContent='Demo reset. The offline sample warning is open again.'};document.querySelector('#start').onclick=()=>localStorage.removeItem(key)</script></body></html>`;
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE)
-    .then((cache) => cache.addAll(SHELL))
-    .then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((cache) => Promise.all(SHELL.map(async (url) => {
+    try {
+      const request = new Request(new URL(url, self.location.origin), { cache: 'reload' });
+      const response = await fetch(request);
+      if (response.ok) await cache.put(url, response);
+    } catch {
+      // The self-contained offline demo still works if an optional shell file misses the precache.
+    }
+  }))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
