@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal Check</title>
+    <meta name="color-scheme" content="light" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to checker</a>
+    <main id="main">
+      <header class="masthead">
+        <span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div>
+          <p class="eyebrow">Field note 01</p>
+          <h1>Signal Check</h1>
+        </div>
+      </header>
+
+      <p class="lede">See whether this page asks you to tell things apart by color alone.</p>
+
+      <fieldset class="models">
+        <legend>Compare colors as</legend>
+        <label><input type="radio" name="model" value="deutan" checked /> Deutan <small>green-sensitive</small></label>
+        <label><input type="radio" name="model" value="protan" /> Protan <small>red-sensitive</small></label>
+        <label><input type="radio" name="model" value="tritan" /> Tritan <small>blue-sensitive</small></label>
+      </fieldset>
+
+      <button class="check-button" id="check" type="button">
+        <span aria-hidden="true">◎</span> Check this page
+      </button>
+
+      <section class="status-sheet" aria-labelledby="status-title">
+        <h2 id="status-title">Notebook</h2>
+        <div id="status" role="status" aria-live="polite">
+          <p><strong>Ready.</strong> The visible part of your page will be checked on this device.</p>
+        </div>
+        <div id="progress" class="progress" hidden aria-hidden="true"><i></i><i></i><i></i></div>
+      </section>
+
+      <p class="offline" id="offline" hidden><span aria-hidden="true">✓</span> Offline. Checks still work locally.</p>
+      <footer><span>No uploads. No tracking.</span><button id="clear" class="text-button" type="button">Clear last check</button></footer>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
