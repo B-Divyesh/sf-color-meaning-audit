@@ -1,0 +1,16 @@
+{
+  "url": "https://color-meaning-audit.sociobot.in/demo/?demo=1",
+  "method": "Fresh Chromium context; close the open Signal Check sheet; scroll the document; measure .demo-banner",
+  "mobile": {
+    "viewport": "390x844",
+    "bannerY": -152,
+    "bannerHeight": 136,
+    "intersectsViewport": false
+  },
+  "desktop": {
+    "viewport": "1440x900",
+    "bannerY": -226,
+    "bannerHeight": 60,
+    "intersectsViewport": false
+  }
+}
