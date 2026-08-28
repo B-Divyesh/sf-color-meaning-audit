@@ -1,77 +1,65 @@
-# Repair handoff — PASS
+# Independent verification handoff — FAIL
 
-**Work order:** `color-meaning-audit-repair-1`
-**Failed base:** `8e073ebbc457782e2574e413bee18ad94934d959` (candidate `65c751d8ad210f6d18b2b42f2119f19a99e05136`)
-**Repair commits:** `9a1274104f6c798359d538b7c8535f77791ccee0`, `f6f38c631f325fe7a231e6d5018f770a4bf9a6f1`
-**Deployment:** production Static Web App, 2026-08-28
+**Work order:** `color-meaning-audit-verify-2`
 
-## Release blockers repaired
+**Candidate:** `871409aac922bd2f5370da6e0dc49f419853a9fa`
 
-### P1 — clean `npm test` could depend on a stale ZIP
+**Live URL:** https://color-meaning-audit.sociobot.in/
 
-`npm test` now invokes `prepare:test`, which removes `dist/`, builds the MV3
-extension and static site, packages the extension ZIP, verifies the deployed
-site output, and only then starts Playwright. The browser regression requests
-the download, requires `application/zip`, a non-trivial size, and ZIP magic
-bytes (`PK\x03\x04`). A clean `npm ci && npm test` therefore cannot pass by
-receiving Vite's HTML fallback or by inheriting an earlier `dist/` directory.
+**Verified:** 2026-08-28
 
-### P2 — fingerprinted static assets were only cached for 30 seconds
+## Decision
 
-`staticwebapp.config.json` now keeps documents and downloads revalidated
-(`public, max-age=0, must-revalidate`) while serving `/assets/*` for one year
-with `immutable`. The hero images were moved from `public/` into the Vite
-asset graph, so every asset covered by that rule is content-fingerprinted.
-Unit and post-build checks assert the policy and emitted fingerprinted URLs.
+**FAIL.** The clean install, full test suite, typecheck, exact production build,
+package integrity, live deployment identity, core extension flows, privacy,
+accessibility, responsive behavior, and performance budgets pass. The release
+is blocked because the popup loading marks are permanently visible and animate
+indefinitely in Ready, success, cleared, and error states.
 
-## Verification evidence
+Full evidence and reproductions are in `.factory/verification-2.md`.
 
-- Clean install: `npm ci` completed; 263 packages audited with 0 vulnerabilities.
-- Full test: `npm test` passed from a clean `dist/`: 5 unit tests; 5 Playwright
-  checks passed across Desktop Chromium and an exact 390×844 mobile viewport;
-  the sole desktop execution of the mobile-only assertion was an expected skip.
-  This includes serious/critical axe checks for `/`, `/privacy/`, and `/terms/`,
-  keyboard `Enter` activation of the comparison control, download package
-  verification, and mobile overflow/primary-action coverage.
-- Type/lint equivalent: `npm run typecheck` (`wxt prepare && tsc --noEmit`)
-  passed as part of `npm test`; the project has no separate lint tool.
-- Production build: `npm run build` passed. `unzip -t
-  dist/site/downloads/signal-check-chrome.zip` passed; the MV3 manifest has
-  only `activeTab`, `scripting`, and `storage`, with no host permissions.
-- Dependency audit: `npm audit --omit=dev` found 0 vulnerabilities.
-- Live browser smoke: at `https://color-meaning-audit.sociobot.in/`, desktop
-  (1440×900) and mobile (390×844) both passed keyboard activation, semantic
-  `<html lang>`, one `<h1>`, one `<main>`, no horizontal overflow, 0
-  serious/critical axe violations, and 0 console/page errors.
-- Privacy/source check: no remote runtime URL is present; only a local
-  data-URL SVG filter and optional GitHub source/issue links remain. The
-  extension still stores only the documented local preference/result data.
-- Offline/update scope: this is an MV3 extension plus a non-PWA static site;
-  it intentionally registers no service worker or offline cache. Its browser
-  and extension update paths remain platform-managed, with no remote API or
-  telemetry added.
+## Verification summary
 
-## Deployment and live identity
+- Clean detached checkout at the exact candidate; `npm ci` audited 263
+  packages with 0 vulnerabilities.
+- `npm test`: 5 Vitest tests passed; 5 Playwright tests passed with 1 intended
+  desktop skip. TypeScript passed; no lint command exists.
+- Separate `npm run build` passed; the extension archive passed `unzip -t`;
+  `npm audit --omit=dev` found 0 vulnerabilities.
+- The production extension was invoked via its real `Alt+Shift+S` action and
+  passed normal DOM, canvas-only, empty, 5/6 px boundary, alternate-shape,
+  offline, protected-page, recovery, clear-storage, keyboard, Escape cleanup,
+  and 390×844 overlay checks.
+- Independent axe: 0 serious/critical issues on all three live routes at
+  desktop and mobile, the extension popup, and the injected overlay. No
+  console/page errors occurred.
+- Live requests stayed first-party; a real extension audit emitted 0 HTTP(S)
+  requests. Stored data was limited to the selected model and last count/time.
+- Lighthouse mobile: performance 100, accessibility 100, best practices 100,
+  SEO 100; LCP 0.9 s, TBT 0 ms, CLS 0, transfer 34 KiB.
+- Live root, JS, CSS, and AVIF hashes exactly match the candidate build. The
+  local/live ZIP payloads are file-for-file identical; raw ZIP timestamps differ.
 
-Deployed `dist/site` directly to the provisioned `sf-color-meaning-audit`
-Azure Static Web App production environment using the work order's static
-deployment class. The custom domain and Static Web App origin both serve the
-new fingerprinted hero URL. The SHA-256 of live `/` equals the local
-`dist/site/index.html` SHA-256:
+## Defects
 
-`038bf7986622bc0f33e2bf8eebaae0425222ebe94dfce305873896bb35c66f47`
+### P1 — Popup progress animation never hides
 
-Live header checks confirm:
+`#progress` has `hidden=true` but computes to `display:flex`, remains visible,
+and runs the `pencil` animation every 0.9 seconds with `infinite` iterations.
+The CSS display rule overrides the hidden attribute, so loading is falsely
+shown in every state and loops without a pause control. This must be fixed and
+covered by a computed-style state regression before release.
 
-- `/`: `public, max-age=0, must-revalidate`
-- fingerprinted JS and AVIF: `public, max-age=31536000, immutable`
-- ZIP: `application/zip`, `public, max-age=0, must-revalidate`, 16,791 bytes
-- CSP, HSTS, `nosniff`, no-referrer, and restrictive permissions policy remain present.
+### P2 — AVIF response has the wrong MIME type
 
-## Known product limits
+The live fingerprinted `.avif` returns `application/octet-stream` instead of
+`image/avif`. Chrome decoded it in this run, but the response metadata should
+be corrected for portability and consistency with `nosniff`.
 
-The original, honest limitations remain: this is advisory rather than a
-vision diagnosis or certification, and it can miss meaning in canvas, video,
-raster-only, tiny, or off-screen content. The proposed 20-chart user-study
-benchmark is still future research work. The extension ZIP is unsigned and
-not submitted to a browser store.
+## Remaining known limits
+
+The tool is advisory rather than a diagnosis or certification and intentionally
+limits analysis to visible content. The proposed 20-chart user benchmark is
+still future research. The extension ZIP remains unsigned and is not submitted
+to a browser store. This is not a PWA, backend, library, or CLI; those
+artifact-specific checks do not apply.
