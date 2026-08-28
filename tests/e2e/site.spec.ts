@@ -13,6 +13,12 @@ test('landing page explains and demonstrates the product', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Deutan comparison' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('heading', { name: /colors now nearly merge/i })).toBeVisible();
 
+  const avifPath = await page.locator('source[type="image/avif"]').getAttribute('srcset');
+  expect(avifPath).toBeTruthy();
+  const avifResponse = await page.request.get(avifPath!);
+  expect(avifResponse.ok()).toBeTruthy();
+  expect(avifResponse.headers()['content-type']).toContain('image/avif');
+
   const response = await page.request.get('/downloads/signal-check-chrome.zip');
   expect(response.ok()).toBeTruthy();
   expect(response.headers()['content-type']).toContain('application/zip');
@@ -31,6 +37,25 @@ test('main and legal pages have no serious accessibility findings', async ({ pag
     const serious = results.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact || ''));
     expect(serious, `${path} accessibility violations in ${testInfo.project.name}`).toEqual([]);
   }
+});
+
+test('site stays first-party and does not create persistent browser state', async ({ context, page }) => {
+  const requestOrigins = new Set<string>();
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.protocol === 'http:' || url.protocol === 'https:') requestOrigins.add(url.origin);
+  });
+
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+
+  expect([...requestOrigins]).toEqual([new URL(page.url()).origin]);
+  expect(await context.cookies()).toEqual([]);
+  expect(await page.evaluate(async () => ({
+    localStorage: localStorage.length,
+    sessionStorage: sessionStorage.length,
+    serviceWorkers: (await navigator.serviceWorker.getRegistrations()).length,
+  }))).toEqual({ localStorage: 0, sessionStorage: 0, serviceWorkers: 0 });
 });
 
 test('mobile layout has no horizontal overflow and keeps the primary action visible', async ({ page }, testInfo) => {

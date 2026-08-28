@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test, chromium, type BrowserContext, type Page } from '@playwright/test';
 import { resolve } from 'node:path';
 
@@ -7,6 +8,7 @@ async function openPackagedPopup(): Promise<{ context: BrowserContext; popup: Pa
   const context = await chromium.launchPersistentContext('', {
     channel: 'chromium',
     headless: true,
+    viewport: { width: 390, height: 844 },
     args: [
       `--disable-extensions-except=${extensionPath}`,
       `--load-extension=${extensionPath}`,
@@ -36,6 +38,18 @@ test('packaged popup shows progress only while a check is pending', async () => 
     // Ready state.
     await expect(popup.getByText('Ready.', { exact: true })).toBeVisible();
     await expectProgress(popup, false);
+    const dimensions = await popup.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
+    const axeResults = await new AxeBuilder({ page: popup }).analyze();
+    expect(axeResults.violations.filter(({ impact }) => ['serious', 'critical'].includes(impact || ''))).toEqual([]);
+
+    await context.setOffline(true);
+    await expect(popup.getByText('Offline. Checks still work locally.')).toBeVisible();
+    await context.setOffline(false);
+    await expect(popup.getByText('Offline. Checks still work locally.')).toBeHidden();
 
     await popup.evaluate(() => {
       let releaseQuery!: (tabs: chrome.tabs.Tab[]) => void;
@@ -58,7 +72,8 @@ test('packaged popup shows progress only while a check is pending', async () => 
       }] as chrome.scripting.InjectionResult[];
     });
 
-    await popup.getByRole('button', { name: 'Check this page' }).click();
+    await popup.getByRole('button', { name: 'Check this page' }).focus();
+    await popup.keyboard.press('Enter');
 
     // Loading state while the browser query is intentionally pending.
     await expect(popup.getByText('Checking the visible page…', { exact: false })).toBeVisible();
@@ -73,14 +88,16 @@ test('packaged popup shows progress only while a check is pending', async () => 
     await expectProgress(popup, false);
 
     // Cleared state.
-    await popup.getByRole('button', { name: 'Clear last check' }).click();
+    await popup.getByRole('button', { name: 'Clear last check' }).focus();
+    await popup.keyboard.press('Enter');
     await expect(popup.getByText('Cleared.', { exact: false })).toBeVisible();
     await expectProgress(popup, false);
 
     await popup.evaluate(() => {
       chrome.tabs.query = async () => [];
     });
-    await popup.getByRole('button', { name: 'Check this page' }).click();
+    await popup.getByRole('button', { name: 'Check this page' }).focus();
+    await popup.keyboard.press('Enter');
 
     // Protected-page error state.
     await expect(popup.getByText('Couldn’t check this page.', { exact: false })).toBeVisible();

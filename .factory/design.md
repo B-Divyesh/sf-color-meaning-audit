@@ -47,7 +47,7 @@ An 8 px base rhythm with 4 px for small optical corrections. Page measures cap a
 
 ## Motion
 
-Transitions last 160–220 ms and use opacity/translate only: the report sheet enters from its browser-toolbar origin, and findings expose their detail in place. Nothing loops. Under `prefers-reduced-motion: reduce`, transitions and animated scan marks become instantaneous while progress remains textual.
+Transitions last 160–220 ms and use opacity/translate only: the report sheet enters from its browser-toolbar origin, and findings expose their detail in place. No decorative or idle motion loops; pencil marks repeat only while a finite check is pending and disappear in every settled state. Under `prefers-reduced-motion: reduce`, transitions and animated scan marks become instantaneous while progress remains textual.
 
 ## Original asset plan and provenance
 
