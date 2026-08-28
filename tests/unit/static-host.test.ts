@@ -22,3 +22,22 @@ describe('static host caching policy', () => {
     expect(config.responseOverrides['404']).toEqual({ rewrite: '/404.html', statusCode: 404 });
   });
 });
+
+describe('plain project copy', () => {
+  it('keeps reader-facing test instructions free of unexplained runner jargon', async () => {
+    const readme = await readFile(new URL('../../README.md', import.meta.url), 'utf8');
+    const explanation = 'On Linux, the test command opens a test browser and uses the extension button.';
+
+    expect(readme).toContain(explanation);
+    expect(readme).not.toMatch(/\bXvfb\b/);
+    expect(explanation.split(/\s+/)).toHaveLength(14);
+  });
+
+  it('keeps the catalog description verb-first and within 120 characters', async () => {
+    const description = (await readFile(new URL('../../.factory/catalog-description.txt', import.meta.url), 'utf8')).trim();
+
+    expect(description).toMatch(/^Check\b/);
+    expect(description.length).toBeLessThanOrEqual(120);
+    expect(description).not.toContain('\n');
+  });
+});
