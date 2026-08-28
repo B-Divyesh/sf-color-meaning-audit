@@ -1,0 +1,76 @@
+{
+  "commit": "18e874186ceff85568d3ed8c854b4bbbae088346",
+  "cleanClone": "/tmp/signal-check-polish-5-final-p4AFIX/repo",
+  "results": [
+    {
+      "id": "free-download",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:free-download'",
+      "result": "PASS"
+    },
+    {
+      "id": "no-account-screen",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:no-account-screen'",
+      "result": "PASS"
+    },
+    {
+      "id": "demo-warning",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-warning'",
+      "result": "PASS"
+    },
+    {
+      "id": "demo-isolation",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-isolation'",
+      "result": "PASS"
+    },
+    {
+      "id": "demo-reset",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-reset'",
+      "result": "PASS"
+    },
+    {
+      "id": "demo-exit",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-exit'",
+      "result": "PASS"
+    },
+    {
+      "id": "demo-first-party",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-first-party'",
+      "result": "PASS"
+    },
+    {
+      "id": "demo-offline",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-offline'",
+      "result": "PASS"
+    },
+    {
+      "id": "extension-check-notes",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-check-notes'",
+      "result": "PASS"
+    },
+    {
+      "id": "color-vision-views",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:color-vision-views'",
+      "result": "PASS"
+    },
+    {
+      "id": "extension-local-check",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-check'",
+      "result": "PASS"
+    },
+    {
+      "id": "extension-offline",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-offline'",
+      "result": "PASS"
+    },
+    {
+      "id": "extension-local-storage",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-storage'",
+      "result": "PASS"
+    },
+    {
+      "id": "extension-clear",
+      "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-clear'",
+      "result": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+commit=54ff710746c80e1fb309cbf59b275f3bef23cf02
+RUN free-download: npm run prepare:test && npm run test:e2e -- --grep '@claim:free-download'
+PASS free-download
+RUN no-account-screen: npm run prepare:test && npm run test:e2e -- --grep '@claim:no-account-screen'
+PASS no-account-screen
+RUN demo-warning: npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-warning'
+PASS demo-warning
+RUN demo-isolation: npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-isolation'
+PASS demo-isolation
+RUN demo-reset: npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-reset'
+PASS demo-reset
+RUN demo-exit: npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-exit'
+PASS demo-exit
+RUN demo-first-party: npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-first-party'
+PASS demo-first-party
+RUN demo-offline: npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-offline'
+PASS demo-offline
+RUN extension-check-notes: npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-check-notes'
+PASS extension-check-notes
+RUN color-vision-views: npm run prepare:test && npm run test:e2e -- --grep '@claim:color-vision-views'
+PASS color-vision-views
+RUN extension-local-check: npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-check'
+PASS extension-local-check
+RUN extension-offline: npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-offline'
+PASS extension-offline
+RUN extension-local-storage: npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-storage'
+PASS extension-local-storage
+RUN extension-clear: npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-clear'
+PASS extension-clear

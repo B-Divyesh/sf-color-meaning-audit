@@ -1,0 +1,53 @@
+
+> signal-check@1.0.5 test:e2e
+> xvfb-run -a playwright test tests/e2e/site.spec.ts
+
+
+Running 28 tests using 1 worker
+
+[1A[2K(node:19528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:19528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/28] [chromium] › tests/e2e/site.spec.ts:15:1 › @claim:free-download downloads the packaged extension directly
+[1A[2K[2/28] [chromium] › tests/e2e/site.spec.ts:23:1 › @claim:no-account-screen opens the sample without sign-in or form fields
+[1A[2K[3/28] [chromium] › tests/e2e/site.spec.ts:29:1 › @claim:demo-warning opens the real check-note overlay on sample status data
+[1A[2K[4/28] [chromium] › tests/e2e/site.spec.ts:42:1 › @claim:demo-isolation keeps sample state in a demo namespace
+[1A[2K[5/28] [chromium] › tests/e2e/site.spec.ts:49:1 › @claim:demo-reset removes and recreates only sample state
+[1A[2K[6/28] [chromium] › tests/e2e/site.spec.ts:59:1 › @claim:demo-exit discards sample state and starts the real install
+[1A[2K[7/28] [chromium] › tests/e2e/site.spec.ts:75:1 › @claim:demo-first-party requests only this site during the demo flow
+[1A[2K[8/28] [chromium] › tests/e2e/site.spec.ts:85:1 › @claim:demo-offline reloads the sample after its first visit
+[1A[2K[9/28] [chromium] › tests/e2e/site.spec.ts:99:1 › routes provide titles, metadata, focus, and an explicit not-found page
+[1A[2K[10/28] [chromium] › tests/e2e/site.spec.ts:123:1 › main, demo, install, legal, and not-found pages have no serious accessibility findings
+[1A[2K[11/28] [chromium] › tests/e2e/site.spec.ts:132:1 › demo boundary and actions remain visible after scrolling the sample
+[1A[2K[12/28] [chromium] › tests/e2e/site.spec.ts:152:1 › responsive layout has no horizontal overflow and keeps every core target at least 44px
+[1A[2K[13/28] [chromium] › tests/e2e/site.spec.ts:184:1 › primary demo wording names its result and the query entry opens the isolated route
+[1A[2K[14/28] [chromium] › tests/e2e/site.spec.ts:199:1 › real links, reload, and browser Back preserve route titles and heading focus
+[1A[2K(node:19812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:19812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[15/28] [mobile] › tests/e2e/site.spec.ts:15:1 › @claim:free-download downloads the packaged extension directly
+[1A[2K[16/28] [mobile] › tests/e2e/site.spec.ts:23:1 › @claim:no-account-screen opens the sample without sign-in or form fields
+[1A[2K[17/28] [mobile] › tests/e2e/site.spec.ts:29:1 › @claim:demo-warning opens the real check-note overlay on sample status data
+[1A[2K[18/28] [mobile] › tests/e2e/site.spec.ts:42:1 › @claim:demo-isolation keeps sample state in a demo namespace
+[1A[2K[19/28] [mobile] › tests/e2e/site.spec.ts:49:1 › @claim:demo-reset removes and recreates only sample state
+[1A[2K[20/28] [mobile] › tests/e2e/site.spec.ts:59:1 › @claim:demo-exit discards sample state and starts the real install
+[1A[2K[21/28] [mobile] › tests/e2e/site.spec.ts:75:1 › @claim:demo-first-party requests only this site during the demo flow
+[1A[2K[22/28] [mobile] › tests/e2e/site.spec.ts:85:1 › @claim:demo-offline reloads the sample after its first visit
+[1A[2K[23/28] [mobile] › tests/e2e/site.spec.ts:99:1 › routes provide titles, metadata, focus, and an explicit not-found page
+[1A[2K[24/28] [mobile] › tests/e2e/site.spec.ts:123:1 › main, demo, install, legal, and not-found pages have no serious accessibility findings
+[1A[2K[25/28] [mobile] › tests/e2e/site.spec.ts:132:1 › demo boundary and actions remain visible after scrolling the sample
+[1A[2K[26/28] [mobile] › tests/e2e/site.spec.ts:152:1 › responsive layout has no horizontal overflow and keeps every core target at least 44px
+[1A[2K[27/28] [mobile] › tests/e2e/site.spec.ts:184:1 › primary demo wording names its result and the query entry opens the isolated route
+[1A[2K[28/28] [mobile] › tests/e2e/site.spec.ts:199:1 › real links, reload, and browser Back preserve route titles and heading focus
+[1A[2K  8 skipped
+  20 passed (20.5s)

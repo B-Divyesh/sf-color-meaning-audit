@@ -1,0 +1,15 @@
+Archive:  dist/site/downloads/signal-check-chrome.zip
+    testing: assets/                  OK
+    testing: assets/popup-BXADcy8j.css   OK
+    testing: background.js            OK
+    testing: chunks/                  OK
+    testing: chunks/popup-CeBc1w6s.js   OK
+    testing: icon/                    OK
+    testing: icon/128.png             OK
+    testing: icon/16.png              OK
+    testing: icon/32.png              OK
+    testing: icon/48.png              OK
+    testing: icon/source.svg          OK
+    testing: manifest.json            OK
+    testing: popup.html               OK
+No errors detected in compressed data of dist/site/downloads/signal-check-chrome.zip.

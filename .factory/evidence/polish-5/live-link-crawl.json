@@ -1,0 +1,120 @@
+{
+  "checkedAt": "2026-08-28T15:23:30.241Z",
+  "expectedNotFound": {
+    "url": "https://color-meaning-audit.sociobot.in/not-a-real-route",
+    "status": 404,
+    "finalUrl": "https://color-meaning-audit.sociobot.in/not-a-real-route",
+    "ok": false
+  },
+  "links": [
+    {
+      "url": "https://color-meaning-audit.sociobot.in/",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/404.html",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/404.html",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/apple-touch-icon.png",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/apple-touch-icon.png",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/assets/site-DHLMPAh1.js",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/assets/site-DHLMPAh1.js",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/assets/site-DzfqAGkt.css",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/assets/site-DzfqAGkt.css",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/demo/",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/demo/",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/demo/?demo=1",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/demo/?demo=1",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/downloads/signal-check-chrome.zip",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/downloads/signal-check-chrome.zip",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/icon.svg",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/icon.svg",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/install/",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/install/",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/install/?download=1",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/install/?download=1",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/not-a-real-route",
+      "status": 404,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/not-a-real-route",
+      "ok": false
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/privacy/",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/privacy/",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/robots.txt",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/robots.txt",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/sitemap.xml",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/sitemap.xml",
+      "ok": true
+    },
+    {
+      "url": "https://color-meaning-audit.sociobot.in/terms/",
+      "status": 200,
+      "finalUrl": "https://color-meaning-audit.sociobot.in/terms/",
+      "ok": true
+    },
+    {
+      "url": "https://github.com/B-Divyesh/sf-color-meaning-audit",
+      "status": 200,
+      "finalUrl": "https://github.com/B-Divyesh/sf-color-meaning-audit",
+      "ok": true
+    },
+    {
+      "url": "https://github.com/B-Divyesh/sf-color-meaning-audit/issues",
+      "status": 200,
+      "finalUrl": "https://github.com/B-Divyesh/sf-color-meaning-audit/issues",
+      "ok": true
+    }
+  ],
+  "pass": true
+}

@@ -9,7 +9,7 @@
   {
     "id": "no-account-screen",
     "claim": "No account screen",
-    "where": "landing quick facts",
+    "where": "demo page, README",
     "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:no-account-screen'",
     "sandbox": "fresh browser context; open /demo/?demo=1 and assert it is usable without a sign-in form"
   },
