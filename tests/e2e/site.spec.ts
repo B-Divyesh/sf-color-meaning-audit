@@ -1,7 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-const expectedOrigin = 'http://127.0.0.1:4173';
+const expectedOrigin = process.env.PLAYWRIGHT_BASE_URL
+  ? new URL(process.env.PLAYWRIGHT_BASE_URL).origin
+  : 'http://127.0.0.1:4173';
 
 test.beforeEach(({}, testInfo) => {
   if (testInfo.project.name === 'mobile' && testInfo.title.includes('@claim:')) {
@@ -74,7 +76,9 @@ test('@claim:demo-offline reloads the sample after its first visit', async ({ co
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByRole('heading', { name: 'A warning is already open.' })).toBeVisible();
-  await expect(page.locator('#signal-check-overlay-host')).toBeVisible();
+  await expect(page.locator('#signal-check-overlay-host')).toHaveAttribute('role', 'dialog');
+  await expect(page.getByText('Demo — sample data, nothing is saved to your real checks.')).toBeVisible();
+  await expect(page.getByText(/Seek a label, shape, pattern, or written value/i)).toBeVisible();
   await context.setOffline(false);
 });
 
@@ -110,15 +114,65 @@ test('main, demo, legal, and not-found pages have no serious accessibility findi
   }
 });
 
-test('mobile layout has no horizontal overflow, keeps demo controls available, and makes core links 44px', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'mobile-only assertion');
+test('responsive layout has no horizontal overflow and keeps every core target at least 44px', async ({ page }) => {
   await page.goto('/demo/?demo=1');
   const dimensions = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
   expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.client);
   await expect(page.getByRole('button', { name: 'Reset demo' })).toBeVisible();
-  for (const locator of [page.locator('.site-header .brand'), page.locator('.site-footer .brand'), page.getByRole('link', { name: 'Terms' })]) {
+  for (const locator of [
+    page.locator('.site-header .brand'),
+    page.locator('.site-footer .brand'),
+    page.getByRole('link', { name: 'Terms' }),
+    page.getByRole('button', { name: 'Reset demo' }),
+    page.getByRole('link', { name: 'Start for real' }),
+    page.getByRole('radio', { name: 'Red-green' }).locator('..'),
+    page.getByRole('radio', { name: 'Blue-yellow' }).locator('..'),
+  ]) {
     const box = await locator.first().boundingBox();
     expect(box?.height).toBeGreaterThanOrEqual(44);
     expect(box?.width).toBeGreaterThanOrEqual(44);
+  }
+  const boundaryControls = await page.getByRole('button', { name: 'Reset demo' }).evaluate((element) => {
+    const resetBox = element.getBoundingClientRect();
+    const startBox = document.querySelector<HTMLElement>('#start-real')!.getBoundingClientRect();
+    const overlayBox = document.querySelector<HTMLElement>('#signal-check-overlay-host')!.getBoundingClientRect();
+    return {
+      resetBottom: resetBox.bottom,
+      startBottom: startBox.bottom,
+      overlayTop: overlayBox.top,
+    };
+  });
+  expect(boundaryControls.overlayTop).toBeGreaterThanOrEqual(boundaryControls.resetBottom + 7);
+  expect(boundaryControls.overlayTop).toBeGreaterThanOrEqual(boundaryControls.startBottom + 7);
+});
+
+test('primary demo wording names its result and the query entry opens the isolated route', async ({ page }) => {
+  await page.goto('/');
+  const sample = page.getByRole('link', { name: 'Try sample data — see a color-only warning' });
+  await expect(sample).toBeVisible();
+  await sample.click();
+  await expect(page).toHaveURL(/\/demo\/\?demo=1$/);
+  await expect(page.getByText('Demo — sample data, nothing is saved to your real checks.')).toBeVisible();
+
+  await page.goto('/?demo=1');
+  await expect(page).toHaveURL(/\/demo\/\?demo=1$/);
+  await expect(page.locator('#signal-check-overlay-host')).toBeVisible();
+});
+
+test('real links, reload, and browser Back preserve route titles and heading focus', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Privacy' }).first().click();
+  await expect(page).toHaveURL(/\/privacy\/$/);
+  await expect(page).toHaveTitle('Privacy — Signal Check');
+  await expect(page.locator('h1')).toBeFocused();
+  await page.reload();
+  await expect(page.locator('h1')).toBeFocused();
+  await page.goBack();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page).toHaveTitle('Signal Check — check color-only meaning');
+  await expect(page.locator('h1')).toBeFocused();
+
+  for (const name of ['Privacy', 'Terms']) {
+    await expect(page.locator('.site-footer').getByRole('link', { name })).toHaveAttribute('href', `/${name.toLowerCase()}/`);
   }
 });

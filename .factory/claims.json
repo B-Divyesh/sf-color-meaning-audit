@@ -3,84 +3,91 @@
     "id": "free-download",
     "claim": "Free to download",
     "where": "landing quick facts, terms, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:free-download'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:free-download'",
     "sandbox": "fresh browser context; request the landing-linked extension ZIP and assert a valid ZIP response"
   },
   {
     "id": "no-account-screen",
     "claim": "No account screen",
     "where": "landing quick facts",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:no-account-screen'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:no-account-screen'",
     "sandbox": "fresh browser context; open /demo/?demo=1 and assert it is usable without a sign-in form"
   },
   {
     "id": "demo-warning",
     "claim": "The sample audit opens a color-only status warning",
     "where": "landing CTA, demo page, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:demo-warning'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-warning'",
     "sandbox": "fresh browser context at /demo/?demo=1; assert the real check-note dialog and Locate control"
   },
   {
     "id": "demo-isolation",
     "claim": "Sample data stays separate from real checks",
     "where": "landing privacy section, demo banner, privacy policy, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:demo-isolation'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-isolation'",
     "sandbox": "fresh browser context; inspect localStorage after demo launch and assert only a demo: key exists"
   },
   {
     "id": "demo-reset",
     "claim": "Reset demo removes sample state and reopens the sample warning",
     "where": "demo banner, demo instructions, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:demo-reset'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-reset'",
     "sandbox": "fresh browser context; preserve a non-demo sentinel, reset, and assert demo data is recreated while sentinel remains"
   },
   {
     "id": "demo-exit",
     "claim": "Starting for real discards sample state",
     "where": "demo banner, demo documentation",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:demo-exit'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-exit'",
     "sandbox": "fresh browser context; enter demo, choose Start for real, and assert the demo: key is absent"
   },
   {
     "id": "demo-first-party",
     "claim": "The demo requests files from this site only",
     "where": "privacy policy, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:demo-first-party'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-first-party'",
     "sandbox": "fresh browser context; intercept HTTP(S) requests throughout the demo/reset flow and assert same-origin only"
   },
   {
     "id": "demo-offline",
-    "claim": "Demo works offline after its first visit",
+    "claim": "The sample warning reloads offline after its first visit",
     "where": "landing quick facts, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:demo-offline'",
-    "sandbox": "fresh browser context; visit /demo, wait for its service worker, reload once, set offline, then reload and assert the sample dialog"
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-offline'",
+    "sandbox": "fresh browser context; visit /demo, wait for its service worker, reload once, set offline, then reload and assert the sample warning and privacy banner"
   },
   {
     "id": "extension-check-notes",
     "claim": "Signal Check opens check notes with another cue to use",
     "where": "landing, README, extension popup",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:extension-check-notes'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-check-notes'",
     "sandbox": "fresh browser page; run the shipped overlay on a red/green sample and assert its dialog, swatches, and cue text"
+  },
+  {
+    "id": "color-vision-views",
+    "claim": "The extension checks Deutan and Protan red-green views and a Tritan blue-sensitive view",
+    "where": "README, extension popup",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:color-vision-views'",
+    "sandbox": "fresh packaged extension profile; run each selectable view through the real popup against a representative visible-page signal pair and assert the named check-note result and saved model"
   },
   {
     "id": "extension-local-check",
     "claim": "Visible-page checking does not request network resources",
     "where": "privacy policy, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:extension-local-check'",
-    "sandbox": "fresh browser page; run the shipped overlay and intercept HTTP(S) requests"
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-check'",
+    "sandbox": "fresh packaged extension profile; open a same-origin visible-page fixture, run the real popup capture, screenshot analysis, and script injection, then assert the check-note result and zero HTTP(S) requests during the operation"
   },
   {
     "id": "extension-local-storage",
     "claim": "The selected view and last result stay in browser-local extension storage",
     "where": "privacy policy, README",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:extension-local-storage'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-storage'",
     "sandbox": "fresh packaged extension profile; select a view, complete a mocked visible-tab check, and inspect chrome.storage.local"
   },
   {
     "id": "extension-clear",
     "claim": "Clear last check removes the stored last result",
     "where": "privacy policy, extension popup",
-    "test": "npm run prepare:test && npx playwright test --grep '@claim:extension-clear'",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-clear'",
     "sandbox": "fresh packaged extension profile; complete a check, use Clear last check, and assert the cleared state"
   }
 ]

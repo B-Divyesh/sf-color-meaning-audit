@@ -1,8 +1,12 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test, chromium, type BrowserContext, type Page } from '@playwright/test';
+import { expect, test, chromium, type BrowserContext, type CDPSession, type Page } from '@playwright/test';
+import { execFile } from 'node:child_process';
 import { resolve } from 'node:path';
+import { promisify } from 'node:util';
 
 const extensionPath = resolve('dist/extension/chrome-mv3');
+const fixtureOrigin = 'http://127.0.0.1:4173';
+const execFileAsync = promisify(execFile);
 
 async function openPackagedPopup(): Promise<{ context: BrowserContext; popup: Page }> {
   const context = await chromium.launchPersistentContext('', {
@@ -20,6 +24,103 @@ async function openPackagedPopup(): Promise<{ context: BrowserContext; popup: Pa
   const popup = await context.newPage();
   await popup.goto(`chrome-extension://${extensionId}/popup.html`);
   return { context, popup };
+}
+
+type RealCheckFixture = {
+  context: BrowserContext;
+  fixture: Page;
+  popup: PopupTarget;
+};
+
+type PopupTarget = {
+  evaluate<T>(expression: string): Promise<T>;
+};
+
+async function attachPopupTarget(root: CDPSession, targetId: string): Promise<PopupTarget> {
+  const { sessionId } = await root.send('Target.attachToTarget', { targetId, flatten: false });
+  let messageId = 0;
+  const pending = new Map<number, { resolve: (value: unknown) => void; reject: (error: Error) => void }>();
+  root.on('Target.receivedMessageFromTarget', (event) => {
+    if (event.sessionId !== sessionId) return;
+    const message = JSON.parse(event.message) as { id?: number; result?: unknown; error?: { message: string } };
+    if (!message.id) return;
+    const request = pending.get(message.id);
+    if (!request) return;
+    pending.delete(message.id);
+    if (message.error) request.reject(new Error(message.error.message));
+    else request.resolve(message.result);
+  });
+  const send = async (method: string, params: Record<string, unknown> = {}): Promise<any> => {
+    const id = ++messageId;
+    const response = new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+    await root.send('Target.sendMessageToTarget', {
+      sessionId,
+      message: JSON.stringify({ id, method, params }),
+    });
+    return response;
+  };
+  await send('Runtime.enable');
+  return {
+    async evaluate<T>(expression: string): Promise<T> {
+      const response = await send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
+      if (response.exceptionDetails) throw new Error(response.exceptionDetails.text || 'Popup evaluation failed.');
+      return response.result.value as T;
+    },
+  };
+}
+
+async function openRealCheckFixture(): Promise<RealCheckFixture> {
+  const context = await chromium.launchPersistentContext('', {
+    channel: 'chromium',
+    headless: false,
+    viewport: { width: 960, height: 720 },
+    args: [
+      `--disable-extensions-except=${extensionPath}`,
+      `--load-extension=${extensionPath}`,
+    ],
+  });
+  let worker = context.serviceWorkers()[0];
+  if (!worker) worker = await context.waitForEvent('serviceworker');
+  const fixture = context.pages()[0] || await context.newPage();
+  await fixture.goto(fixtureOrigin);
+  await fixture.bringToFront();
+  await execFileAsync(process.execPath, [resolve('scripts/trigger-extension-shortcut.mjs')]);
+  await fixture.waitForTimeout(500);
+  const session = await context.newCDPSession(fixture);
+  const targets = await session.send('Target.getTargets');
+  const popupInfo = targets.targetInfos.find(({ type, url }) => type === 'page' && /chrome-extension:\/\/.+\/popup\.html$/.test(url));
+  if (!popupInfo) throw new Error(`Popup target did not open. Targets: ${JSON.stringify(targets.targetInfos.map(({ type, url }) => ({ type, url })))}`);
+  const popup = await attachPopupTarget(session, popupInfo.targetId);
+  await popup.evaluate(`new Promise((resolve) => document.readyState === 'loading' ? addEventListener('DOMContentLoaded', resolve, { once: true }) : resolve(true))`);
+  return { context, fixture, popup };
+}
+
+async function loadSignalPair(fixture: Page, first: string, second: string): Promise<void> {
+  await fixture.setContent(`
+    <!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Signal Check test fixture</title><style>
+      body { margin: 0; padding: 80px; color: #172c35; background: #fffdf6; font: 18px/1.5 system-ui, sans-serif; }
+      main { max-width: 680px; }
+      .status-list { display: flex; gap: 72px; padding: 32px; border: 2px solid #172c35; }
+      .status { display: flex; align-items: center; gap: 12px; }
+      .status-dot { display: block; width: 28px; height: 28px; border: 2px solid #172c35; border-radius: 50%; }
+      .first { background: ${first}; }
+      .second { background: ${second}; }
+    </style></head><body><main><h1>Release signals</h1><div class="status-list">
+      <div class="status"><span class="status-dot first" aria-label="Ready"></span><span>Ready</span></div>
+      <div class="status"><span class="status-dot second" aria-label="Blocked"></span><span>Blocked</span></div>
+    </div></main></body></html>
+  `);
+}
+
+async function activateFixtureAndCheck(check: RealCheckFixture): Promise<void> {
+  await check.popup.evaluate(`document.querySelector('#check').click()`);
+  try {
+    await expect(check.fixture.locator('#signal-check-overlay-host')).toBeVisible({ timeout: 15_000 });
+  } catch (error) {
+    const diagnostics = await check.popup.evaluate(`(async () => ({ status: document.querySelector('#status').textContent, tabs: (await chrome.tabs.query({ active: true, currentWindow: true })).map(({ id, url }) => ({ id, url })) }))()`);
+    throw new Error(`The real extension check did not open an overlay: ${JSON.stringify(diagnostics)}. ${String(error)}`);
+  }
 }
 
 async function expectProgress(popup: Page, visible: boolean): Promise<void> {
@@ -133,5 +234,50 @@ test('@claim:extension-local-storage saves the chosen view and last result in ex
     expect((saved.lastResult as { count: number }).count).toBe(2);
   } finally {
     await context.close();
+  }
+});
+
+test('@claim:extension-local-check runs the packaged visible-page check without HTTP requests', async () => {
+  const check = await openRealCheckFixture();
+  try {
+    await loadSignalPair(check.fixture, 'rgb(32, 192, 32)', 'rgb(192, 128, 32)');
+    const requests: string[] = [];
+    check.context.on('request', (request) => {
+      if (/^https?:/.test(request.url())) requests.push(request.url());
+    });
+
+    await activateFixtureAndCheck(check);
+
+    const overlay = check.fixture.locator('#signal-check-overlay-host');
+    await expect(overlay.getByRole('heading', { name: /signals? to verify/i })).toBeVisible();
+    await expect(overlay.getByText(/deutan \(green-sensitive\)/i)).toBeVisible();
+    await expect(overlay.getByRole('button', { name: 'Locate these signals' })).toBeVisible();
+    expect(requests).toEqual([]);
+  } finally {
+    await check.context.close();
+  }
+});
+
+test('@claim:color-vision-views checks every selectable view through the packaged extension', async () => {
+  const check = await openRealCheckFixture();
+  const cases = [
+    { model: 'deutan', name: /deutan \(green-sensitive\)/i, colors: ['rgb(32, 192, 32)', 'rgb(192, 128, 32)'] },
+    { model: 'protan', name: /protan \(red-sensitive\)/i, colors: ['rgb(32, 160, 128)', 'rgb(224, 128, 128)'] },
+    { model: 'tritan', name: /tritan \(blue-sensitive\)/i, colors: ['rgb(224, 32, 128)', 'rgb(224, 64, 32)'] },
+  ] as const;
+  try {
+    for (const item of cases) {
+      await loadSignalPair(check.fixture, item.colors[0], item.colors[1]);
+      if (item.model === 'deutan') await check.popup.evaluate(`document.querySelector('input[value="protan"]').click()`);
+      await check.popup.evaluate(`document.querySelector('input[value="${item.model}"]').click()`);
+      await expect.poll(() => check.popup.evaluate<{ visionModel?: string }>(`chrome.storage.local.get('visionModel')`)).toEqual({ visionModel: item.model });
+      await activateFixtureAndCheck(check);
+      const overlay = check.fixture.locator('#signal-check-overlay-host');
+      await expect(overlay.getByText(item.name)).toBeVisible();
+      await expect(overlay.getByRole('heading', { name: /signals? to verify/i })).toBeVisible();
+      await check.fixture.waitForTimeout(600);
+    }
+  } finally {
+    await check.context.close();
   }
 });

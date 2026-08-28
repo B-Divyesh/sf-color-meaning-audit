@@ -5,11 +5,16 @@ const demoKey = 'demo:signal-check:sample-state';
 const state = document.querySelector<HTMLElement>('#demo-state')!;
 const reset = document.querySelector<HTMLButtonElement>('#reset-demo')!;
 const startReal = document.querySelector<HTMLAnchorElement>('#start-real')!;
+const banner = document.querySelector<HTMLElement>('.demo-banner')!;
+
+function positionOverlay(): void {
+  const overlay = document.querySelector<HTMLElement>('#signal-check-overlay-host');
+  overlay?.style.setProperty('top', `${Math.ceil(banner.getBoundingClientRect().bottom + 8)}px`);
+}
 
 function runSample(model: VisionModel = 'deutan'): void {
   scanAndShowOverlay([], model);
-  const overlay = document.querySelector<HTMLElement>('#signal-check-overlay-host');
-  overlay?.style.setProperty('top', '116px');
+  positionOverlay();
   localStorage.setItem(demoKey, JSON.stringify({ model, openedAt: Date.now() }));
   state.textContent = 'Sample status dashboard loaded.';
 }
@@ -28,5 +33,7 @@ reset.addEventListener('click', () => {
 });
 
 startReal.addEventListener('click', () => localStorage.removeItem(demoKey));
+new ResizeObserver(positionOverlay).observe(banner);
+window.addEventListener('resize', positionOverlay);
 
 runSample();

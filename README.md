@@ -6,10 +6,10 @@ Try the isolated sample at [`/demo/?demo=1`](https://color-meaning-audit.sociobo
 
 ## What ships
 
-- A Chromium extension with red-green and blue-yellow color-vision views.
+- A Chromium extension with Deutan and Protan red-green views, plus a Tritan blue-sensitive view.
 - Check notes that point to a label, shape, pattern, written value, or position.
 - A static site with a sample audit, privacy policy, terms, and extension download.
-- An offline demo shell after the first visit.
+- The sample warning reloads offline after its first visit.
 
 ## Run and test
 
@@ -22,6 +22,8 @@ npm run dev:site     # site development
 npm test             # typecheck, unit tests, clean build, browser and axe tests
 npm run build        # creates dist/extension and dist/site
 ```
+
+The end-to-end command uses Xvfb on Linux to invoke the extension’s real toolbar shortcut. This grants the same temporary page access as a user click.
 
 `npm run build` creates `dist/extension/chrome-mv3/`, `dist/site/`, and `dist/site/downloads/signal-check-chrome.zip`.
 

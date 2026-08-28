@@ -28,7 +28,7 @@ test('@claim:extension-check-notes opens accessible check notes with an alternat
   expect(results.violations.filter(({ impact }) => ['serious', 'critical'].includes(impact || ''))).toEqual([]);
 });
 
-test('@claim:extension-local-check uses no HTTP requests while it builds check notes', async ({ page }) => {
+test('the overlay renderer uses no HTTP requests while it builds check notes', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', (request) => requests.push(request.url()));
   await page.setContent('<main><span class="dot" style="display:block;width:24px;height:24px;background:rgb(192,64,64)"></span><span class="dot" style="display:block;width:24px;height:24px;background:rgb(64,144,96)"></span></main>');
