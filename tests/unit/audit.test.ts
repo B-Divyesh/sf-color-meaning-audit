@@ -29,9 +29,9 @@ describe('local color comparison', () => {
     expect(findAmbiguousPalette(imageOf(pixels), 'deutan')).toEqual([]);
   });
 
-  it('limits repeated palette findings', () => {
+  it('flags a repeated red/green screenshot pair once', () => {
     const colors: Array<[number, number, number]> = [];
-    for (let index = 0; index < 120; index += 1) colors.push(index % 2 ? [192, 64, 64] : [64, 144, 96]);
-    expect(findAmbiguousPalette(imageOf(colors), 'deutan', 1).length).toBeLessThanOrEqual(1);
+    for (let index = 0; index < 120; index += 1) colors.push(index < 60 ? [192, 64, 64] : [64, 144, 96]);
+    expect(findAmbiguousPalette(imageOf(colors), 'deutan', 1)).toHaveLength(1);
   });
 });
