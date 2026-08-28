@@ -217,9 +217,15 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
       button { min-width:44px; min-height:44px; border:2px solid #3e286b; border-radius:3px; background:#fffdf6; color:#3e286b; font:700 14px/1 ui-sans-serif,-apple-system,sans-serif; cursor:pointer; }
       button:hover { background:#eee7f7; }
       .locate { width:100%; margin-top:8px; }
+      .return { position:relative; display:block; margin-left:auto; padding:0 14px; background:#5b3f8c; color:#fff; box-shadow:3px 3px 0 #172c35; }
+      .return[hidden] { display:none; }
       .fine { margin:13px 0 0; color:#526269; font-size:12px; line-height:1.45; }
       :focus-visible { outline:3px solid #a65d0c; outline-offset:2px; }
-      @media (max-width: 430px) { :host { inset:8px 6px auto; } .sheet { width:100%; max-height:calc(100vh - 16px); } }
+      @media (max-width: 430px) {
+        :host { inset:8px 6px auto; }
+        :host([data-minimized]) { inset:auto 8px 8px auto; }
+        .sheet { width:100%; max-height:calc(100vh - 16px); }
+      }
       @media (prefers-reduced-motion:no-preference) { .sheet { animation:arrive 180ms ease-out; } @keyframes arrive { from { opacity:0; transform:translateY(-8px); } } }
     </style>
     <section class="sheet" role="dialog" aria-modal="false" aria-labelledby="sc-title" tabindex="-1">
@@ -227,9 +233,12 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
       <p class="summary">${total ? 'These colors can become hard to tell apart in the selected comparison. Use another cue before you act.' : 'The visible area did not contain a repeated color pair that our local check could confidently flag.'}</p>
       <div class="findings"></div>
       <p class="fine">Advisory, not a diagnosis. Only the visible area was checked; charts drawn on canvas may need a text table or source labels.</p>
-    </section>`;
+    </section>
+    <button class="return" type="button" hidden>Return to Signal Check notes</button>`;
 
   const list = shadow.querySelector('.findings')!;
+  const sheet = shadow.querySelector<HTMLElement>('.sheet')!;
+  const returnButton = shadow.querySelector<HTMLButtonElement>('.return')!;
   const escape = (value: string) => value.replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]!));
   domFindings.forEach((finding, index) => {
     const article = document.createElement('article');
@@ -246,6 +255,12 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
         target.style.setProperty('outline', '4px solid #a65d0c', 'important');
         target.style.setProperty('outline-offset', '4px', 'important');
       });
+      if (innerWidth <= 430) {
+        host.setAttribute('data-minimized', 'true');
+        sheet.hidden = true;
+        returnButton.hidden = false;
+        returnButton.focus({ preventScroll: true });
+      }
       finding.a.element.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
     });
     list.append(article);
@@ -253,11 +268,16 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
   palette.forEach((finding, index) => {
     const article = document.createElement('article');
     article.className = 'note';
-    article.innerHTML = `<div class="swatches" aria-label="Compared colors ${escape(finding.colorA)} and ${escape(finding.colorB)}"><i class="swatch" style="background:${escape(finding.colorA)}"></i><i class="swatch" style="background:${escape(finding.colorB)}"></i></div><h3>${domFindings.length + index + 1}. Repeated page colors may merge</h3><p>These colors cover about ${finding.share}% of sampled color pixels. Seek a label, shape, pattern, or written value.</p>`;
+    article.innerHTML = `<div class="swatches" role="img" aria-label="Compared colors ${escape(finding.colorA)} and ${escape(finding.colorB)}"><i class="swatch" aria-hidden="true" style="background:${escape(finding.colorA)}"></i><i class="swatch" aria-hidden="true" style="background:${escape(finding.colorB)}"></i></div><h3>${domFindings.length + index + 1}. Repeated page colors may merge</h3><p>These colors cover about ${finding.share}% of sampled color pixels. Seek a label, shape, pattern, or written value.</p>`;
     list.append(article);
   });
 
-  const sheet = shadow.querySelector<HTMLElement>('.sheet')!;
+  returnButton.addEventListener('click', () => {
+    host.removeAttribute('data-minimized');
+    returnButton.hidden = true;
+    sheet.hidden = false;
+    sheet.focus();
+  });
   const close = () => {
     document.querySelectorAll('[data-signal-check-highlighted]').forEach(restoreHighlight);
     document.querySelectorAll('[data-signal-check-id]').forEach((node) => node.removeAttribute('data-signal-check-id'));

@@ -8,7 +8,7 @@ It is advisory, not a medical test or accessibility certification. The extension
 
 - A WXT + TypeScript Manifest V3 extension with deutan, protan, and tritan comparisons.
 - DOM/SVG signal inspection plus downsampled visible-screenshot palette analysis.
-- A keyboard and screen-reader accessible field-note overlay; `Escape` closes it and “Locate these signals” outlines the relevant marks.
+- A keyboard and screen-reader accessible field-note overlay; `Escape` closes it and “Locate these signals” outlines the relevant marks. On narrow screens, Locate collapses the notes behind a **Return to Signal Check notes** control so the highlighted source stays visible.
 - Local preferences and last-result count, with a one-click clear action.
 - A responsive static landing site, interactive sample, privacy policy, terms, optimized original artwork, and downloadable extension ZIP.
 
