@@ -45,6 +45,8 @@ npm run build
 
 Deploy `dist/site` as the static site. The pushed `main` branch is the work-order deployment input; `site/public/staticwebapp.config.json` carries the static route, 404, security-header, and cache configuration.
 
+Deployment was completed through `/opt/fleet/lib/deploy-static.sh color-meaning-audit dist/site` on 2026-08-28. Azure Static Web Apps deployment `6688e946-d080-42bb-b6ba-b8ed5cfdafe2` succeeded to `purple-smoke-0321d200f.7.azurestaticapps.net`; the configured custom domain returned HTTPS 200. Post-deploy verification is stored in `.factory/evidence/deploy-59ca1ef/`: `/demo/` loaded in 557 ms with no console errors, `lang=en`, one `<h1>`, `<main>`, no missing image alt text, and no unnamed buttons. `https://color-meaning-audit.sociobot.in/not-a-real-route` returned HTTP 404 with the styled not-found copy.
+
 ## Known gaps
 
 None known. The generated social card is a crop of the recorded original notebook artwork; no third-party runtime assets or services were added.
