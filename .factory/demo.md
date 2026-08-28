@@ -4,4 +4,4 @@ Open [`/demo/?demo=1`](/demo/?demo=1) or [`/demo/`](/demo/). The sample is a Nor
 
 The sticky banner stays visible while the sample scrolls. It says “Demo — sample data, nothing is saved to your real checks.” Demo state uses only `localStorage` key `demo:signal-check:sample-state`. It never reads or writes extension storage or non-`demo:` keys. **Reset demo** removes and recreates that sample key. **Start for real** removes it, opens `/install/`, and downloads the extension ZIP.
 
-After its first visit, the service worker reloads the full sample, sticky banner, Reset action, and color-vision controls while offline.
+After its first visit, the service worker reloads a self-contained Northstar sample with the same truthful warning, sticky banner, Reset action, and isolated key. Color-vision switching needs the online sample.
