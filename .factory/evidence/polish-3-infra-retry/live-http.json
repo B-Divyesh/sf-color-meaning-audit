@@ -1,0 +1,11 @@
+[
+  {"url":"https://color-meaning-audit.sociobot.in/","status":200,"content_type":"text/html"},
+  {"url":"https://color-meaning-audit.sociobot.in/demo/?demo=1","status":200,"content_type":"text/html"},
+  {"url":"https://color-meaning-audit.sociobot.in/privacy/","status":200,"content_type":"text/html"},
+  {"url":"https://color-meaning-audit.sociobot.in/terms/","status":200,"content_type":"text/html"},
+  {"url":"https://color-meaning-audit.sociobot.in/404.html","status":200,"content_type":"text/html"},
+  {"url":"https://color-meaning-audit.sociobot.in/not-a-real-route","status":404,"content_type":"text/html"},
+  {"url":"https://color-meaning-audit.sociobot.in/robots.txt","status":200,"content_type":"text/plain"},
+  {"url":"https://color-meaning-audit.sociobot.in/sitemap.xml","status":200,"content_type":"text/xml"},
+  {"url":"https://color-meaning-audit.sociobot.in/downloads/signal-check-chrome.zip","status":200,"content_type":"application/zip"}
+]

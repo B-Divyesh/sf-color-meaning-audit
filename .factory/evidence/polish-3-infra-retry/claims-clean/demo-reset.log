@@ -1,0 +1,93 @@
+
+> signal-check@1.0.3 prepare:test
+> npm run clean && npm run build:extension && npm run build:site && npm run package:extension && node scripts/verify-site-output.mjs
+
+
+> signal-check@1.0.3 clean
+> node scripts/clean.mjs
+
+
+> signal-check@1.0.3 build:extension
+> wxt build
+
+
+WXT 0.21.4
+ℹ Building chrome-mv3 for production with Vite 8.2.2
+[?25l⠋ Preparing...[K⠋ [1/2] background[K⠋ [2/2] popup[K⠙ [2/2] popup[K⠹ [2/2] popup[K[K[?25h[K[?25h✔ Built extension in 316 ms
+  ├─ dist/extension/chrome-mv3/manifest.json              521 B   
+  ├─ dist/extension/chrome-mv3/popup.html                 2.06 kB 
+  ├─ dist/extension/chrome-mv3/background.js              508 B   
+  ├─ dist/extension/chrome-mv3/chunks/popup-CeBc1w6s.js   13.66 kB
+  ├─ dist/extension/chrome-mv3/assets/popup-BXADcy8j.css  3.40 kB 
+  ├─ dist/extension/chrome-mv3/icon/128.png               3.74 kB 
+  ├─ dist/extension/chrome-mv3/icon/16.png                509 B   
+  ├─ dist/extension/chrome-mv3/icon/32.png                987 B   
+  ├─ dist/extension/chrome-mv3/icon/48.png                1.50 kB 
+  └─ dist/extension/chrome-mv3/icon/source.svg            644 B   
+Σ Total size: 27.53 kB                                  
+✔ Finished in 463 ms
+
+> signal-check@1.0.3 build:site
+> vite build --config site/vite.config.ts
+
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 13 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/site/404.html                                  2.59 kB │ gzip: 1.00 kB
+dist/site/sw.js                                     3.34 kB
+dist/site/terms/index.html                          3.37 kB │ gzip: 1.36 kB
+dist/site/privacy/index.html                        3.75 kB │ gzip: 1.45 kB
+dist/site/demo/index.html                           4.95 kB │ gzip: 1.75 kB
+dist/site/index.html                                6.73 kB │ gzip: 2.28 kB
+dist/site/assets/hero-notebook-760-DhXhs_Ud.webp   24.81 kB
+dist/site/assets/hero-notebook-KyRBVpV8.avif       27.04 kB
+dist/site/assets/hero-notebook-Df-u7aeu.webp       63.42 kB
+dist/site/assets/hero-notebook-C5fpx6uo.jpg       145.59 kB
+dist/site/assets/site-fOTvjyHM.css                 14.07 kB │ gzip: 4.02 kB
+dist/site/assets/legal-DbmTydbt.js                  0.02 kB │ gzip: 0.04 kB
+dist/site/assets/main-DMM9R5K5.js                   0.11 kB │ gzip: 0.12 kB
+dist/site/assets/site-_0AzO6u4.js                   0.95 kB │ gzip: 0.52 kB
+dist/site/assets/demo-MsQAnQMn.js                  10.00 kB │ gzip: 4.22 kB
+
+✓ built in 129ms
+
+> signal-check@1.0.3 package:extension
+> node scripts/package-extension.mjs
+
+Packaged /tmp/signal-check-polish-3-infra-retry-GohrcN/repo/dist/site/downloads/signal-check-chrome.zip
+Verified fingerprinted assets and static-host cache policy.
+
+> signal-check@1.0.3 test:e2e
+> xvfb-run -a playwright test --grep @claim:demo-reset
+
+[1A[2K[2m[WebServer] [22m(node:3893) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1A[2K[2m[WebServer] [22m(node:3907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 2 tests using 1 worker
+
+[1A[2K(node:3924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:3924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/2] [chromium] › tests/e2e/site.spec.ts:48:1 › @claim:demo-reset removes and recreates only sample state
+[1A[2K(node:3997) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:3997) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[2/2] [mobile] › tests/e2e/site.spec.ts:48:1 › @claim:demo-reset removes and recreates only sample state
+[1A[2K  1 skipped
+  1 passed (4.6s)

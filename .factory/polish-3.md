@@ -48,3 +48,18 @@ Every finding in `review-1.md`, `review-2.md`, and `review-3.md` is closed below
 - Deployment: Azure Static Web Apps deployment `5bf80b00-d00e-4cd5-82b6-85e3bb7b52fe` succeeded; the custom domain reported Ready and HTTPS 200.
 
 No finding from any review remains open.
+
+## Infrastructure retry verification
+
+The repair was reverified from a fresh clone at `b8f57c38ce1f5e68a0b15ca69d82d906622eb587` after the controller reported a prior Chromium context SIGSEGV. Playwright 1.58.2 and Chrome for Testing 145 completed the full suite twice without a browser crash. No further product change was required.
+
+- `npm ci` passed with zero vulnerabilities.
+- `npm test` passed 5 Vitest tests and 29 Playwright tests; 15 project duplicates were intentionally skipped. Evidence: `evidence/polish-3-infra-retry/npm-test-clean.log`.
+- All 14 exact claim commands passed independently. Evidence: `evidence/polish-3-infra-retry/claims-clean/` and `summary.json`.
+- Fresh live site coverage passed 18 tests with 8 intentional duplicate skips, including demo isolation/reset/offline, route metadata/focus, Axe, and 390 px geometry. Evidence: `evidence/polish-3-infra-retry/site-live.log`.
+- Every route was opened cold in a separate verifier browser. Fresh desktop/mobile screenshots and console/accessibility summaries are under `evidence/polish-3-infra-retry/live-*`.
+- Live Lighthouse scored 100 in performance, accessibility, best practices, and SEO; LCP was 1.0 s and CLS was 0. Evidence: `evidence/polish-3-infra-retry/lighthouse-live.json`.
+- Local and live extension ZIPs are byte-identical at SHA-256 `c712c78f57ce3d12044a0eda873e1e8bd08647f026b1c69f0d96e5b9158ee0cc`.
+- Azure Static Web Apps deployment `b965676f-300b-4b1d-b166-a7e9dd4ccd94` succeeded. The custom domain is Ready, all real routes return 200, and an unknown route returns the designed 404.
+
+The fresh screenshots replace the same route names used in every finding row above: `live-home`, `live-demo`, `live-privacy`, `live-terms`, and `live-404`. Each finding remains closed on the deployed URL.

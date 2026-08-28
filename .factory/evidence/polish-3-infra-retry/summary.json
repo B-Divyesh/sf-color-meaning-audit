@@ -1,0 +1,62 @@
+{
+  "candidate": "b8f57c38ce1f5e68a0b15ca69d82d906622eb587",
+  "clean_clone": "/tmp/signal-check-polish-3-infra-retry-GohrcN/repo",
+  "playwright": "1.58.2",
+  "chromium": "Chrome for Testing 145.0.7632.6",
+  "install": {
+    "result": "passed",
+    "vulnerabilities": 0
+  },
+  "full_suite": {
+    "result": "passed",
+    "unit_tests_passed": 5,
+    "playwright_tests_passed": 29,
+    "intentional_project_skips": 15,
+    "log": "npm-test-clean.log"
+  },
+  "claims": {
+    "result": "passed",
+    "passed": 14,
+    "total": 14,
+    "ids": [
+      "free-download",
+      "no-account-screen",
+      "demo-warning",
+      "demo-isolation",
+      "demo-reset",
+      "demo-exit",
+      "demo-first-party",
+      "demo-offline",
+      "extension-check-notes",
+      "color-vision-views",
+      "extension-local-check",
+      "extension-offline",
+      "extension-local-storage",
+      "extension-clear"
+    ],
+    "logs": "claims-clean/"
+  },
+  "live_site_suite": {
+    "result": "passed",
+    "tests_passed": 18,
+    "intentional_claim_duplicates_skipped": 8,
+    "log": "site-live.log"
+  },
+  "lighthouse": {
+    "performance": 100,
+    "accessibility": 100,
+    "best_practices": 100,
+    "seo": 100,
+    "fcp": "1.0 s",
+    "lcp": "1.0 s",
+    "tbt": "20 ms",
+    "cls": 0
+  },
+  "deployment": {
+    "id": "b965676f-300b-4b1d-b166-a7e9dd4ccd94",
+    "region": "eastus2",
+    "custom_domain_status": "Ready",
+    "url": "https://color-meaning-audit.sociobot.in/"
+  },
+  "artifact_sha256": "c712c78f57ce3d12044a0eda873e1e8bd08647f026b1c69f0d96e5b9158ee0cc"
+}

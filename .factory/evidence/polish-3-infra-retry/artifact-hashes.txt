@@ -1,0 +1,2 @@
+local  c712c78f57ce3d12044a0eda873e1e8bd08647f026b1c69f0d96e5b9158ee0cc  dist/site/downloads/signal-check-chrome.zip
+live   c712c78f57ce3d12044a0eda873e1e8bd08647f026b1c69f0d96e5b9158ee0cc  https://color-meaning-audit.sociobot.in/downloads/signal-check-chrome.zip
