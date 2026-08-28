@@ -1,4 +1,6 @@
-# Signal Check — polish round 5 handoff
+# Signal Check — review 6 handoff
+
+> This review-only handoff supersedes the round-5 acceptance statement below. No product code changed in review 6; the current verdict is **FAIL**. See `.factory/review-6.md`.
 
 ## Outcome
 
@@ -27,4 +29,10 @@ Primary evidence is under `.factory/evidence/polish-5/`. Run locally with `npm c
 
 ## Known gaps and next steps
 
-None. No review finding, claim, test, deployment check, or product requirement is deferred.
+Review 6 found three remaining items:
+
+1. **F-6-1 (blocking):** the repository has no lockfile. `npm ci` cannot run, and a normal clean install resolves incompatible Playwright types so `npm test` fails at typecheck.
+2. **F-6-2:** the public footer says the hero is original project artwork without a corresponding claim/test.
+3. **F-6-3:** the offline service-worker demo is a reduced route shell without normal navigation, legal links, metadata, route focus, or an explanation for its disabled Locate action.
+
+Review verification: fresh 390 px and desktop live checks passed the first-read, demo, metadata, link, and visual checks; all 14 exact claim commands passed after a diagnostic clean-clone install; `npm run build` passed; `npm test` failed as F-6-1 describes. After repair, verify from a new clone with `npm ci && npm test`, rerun every claim command, and repeat the offline route-shell test.
