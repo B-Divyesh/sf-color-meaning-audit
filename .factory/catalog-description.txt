@@ -1,1 +1,1 @@
-Check color-only chart and dashboard signals before making a decision.
+Check chart and dashboard signals that rely on color alone.

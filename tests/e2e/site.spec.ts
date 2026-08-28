@@ -39,6 +39,12 @@ test('@claim:demo-warning opens the real check-note overlay on sample status dat
   await expect(overlay.getByRole('button', { name: 'Locate these signals' })).toBeVisible();
 });
 
+test('demo describes its own sample warning without an unregistered equivalence promise', async ({ page }) => {
+  await page.goto('/demo/?demo=1');
+  await expect(page.locator('.demo-intro > p:last-child')).toHaveText('Read a sample warning. The sample uses only temporary demo data.');
+  await expect(page.getByText(/same check notes used by the extension/i)).toHaveCount(0);
+});
+
 test('@claim:demo-isolation keeps sample state in a demo namespace', async ({ page }) => {
   await page.goto('/demo/?demo=1');
   const keys = await page.evaluate(() => Object.keys(localStorage));

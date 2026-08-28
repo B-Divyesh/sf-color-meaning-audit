@@ -51,6 +51,14 @@ describe('plain project copy', () => {
     expect(landing).not.toMatch(/original project artwork/i);
   });
 
+  it('does not promise that demo wording is identical to the extension', async () => {
+    const demo = await readFile(new URL('../../site/demo/index.html', import.meta.url), 'utf8');
+
+    expect(demo).toContain('Read a sample warning.');
+    expect(demo).not.toMatch(/same check notes used by the extension/i);
+    expect(demo).not.toMatch(/same .* extension/i);
+  });
+
   it('closes every round-five plain-language finding', async () => {
     const [landing, readme, claimsSource] = await Promise.all([
       readFile(new URL('../../site/index.html', import.meta.url), 'utf8'),

@@ -1,4 +1,4 @@
-# Copy audit — polish round 6
+# Copy audit — polish round 7
 
 Counts treat a hyphenated term, URL, command, or path as one word. Navigation labels and the product name alone are excluded. README code blocks are excluded; every prose sentence and numbered instruction is included below. No sentence exceeds 22 words, and no banned marketing word appears.
 
@@ -43,9 +43,9 @@ Counts treat a hyphenated term, URL, command, or path as one word. Navigation la
 | 5 | See it before you install |
 | 4 | Give color a backup. |
 | 4 | Open the sample warning |
-| 5 | Chromium extension · version 1.0.6 · free |
+| 5 | Chromium extension · version 1.0.7 · free |
 | 6 | Checks color-only signals on the visible page. |
-| 6 | Built by Param Factory · build 1.0.6 |
+| 6 | Built by Param Factory · build 1.0.7 |
 
 ## Install page
 
@@ -66,6 +66,30 @@ Counts treat a hyphenated term, URL, command, or path as one word. Navigation la
 | 4 | Run your first check. |
 | 5 | Open a chart or dashboard. |
 | 11 | Choose Signal Check from the toolbar, then choose Check this page. |
+
+## Demo page
+
+| Words | Text |
+| ---: | --- |
+| 10 | Demo — sample data, nothing is saved to your real checks. |
+| 4 | Sample status dashboard loaded. |
+| 2 | Reset demo |
+| 3 | Start for real |
+| 5 | Sample workspace · color-only status check |
+| 5 | A warning is already open. |
+| 4 | Read a sample warning. |
+| 6 | The sample uses only temporary demo data. |
+| 2 | Northstar release |
+| 3 | Launch status dashboard |
+| 2 | Color-vision view |
+| 1 | Red-green |
+| 1 | Blue-yellow |
+| 10 | The two round marks use color but no written state. |
+| 9 | The check notes say that written status is missing. |
+| 3 | What to try |
+| 7 | Read the warning in the paper sheet. |
+| 4 | Select “Locate these signals.” |
+| 7 | Reset the demo to reopen the sample. |
 
 ## README
 
@@ -127,6 +151,6 @@ First-screen read-aloud check: “For people with color-vision differences who n
 
 | Words | Text |
 | ---: | --- |
-| 10 | Check color-only chart and dashboard signals before making a decision. |
+| 10 | Check chart and dashboard signals that rely on color alone. |
 
-The catalog line starts with a verb, is 70 characters, and has no marketing claim.
+The catalog line starts with a verb, is 59 characters, and has no marketing claim.
