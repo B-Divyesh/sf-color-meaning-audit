@@ -1,0 +1,1165 @@
+{
+  "config": {
+    "configFile": "/work/repo/playwright.config.ts",
+    "rootDir": "/work/repo/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/work/repo/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/work/repo/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/work/repo/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "/work/repo/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "site.spec.ts",
+      "file": "site.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@claim:free-download downloads the packaged extension directly",
+          "ok": true,
+          "tags": [
+            "claim:free-download"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 534,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:09.510Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-f859b28149265390e919",
+          "file": "site.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "@claim:no-account-screen opens the sample without sign-in or form fields",
+          "ok": true,
+          "tags": [
+            "claim:no-account-screen"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 757,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:10.172Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-bccd91ad251fb16662f6",
+          "file": "site.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-warning opens the real check-note overlay on sample status data",
+          "ok": true,
+          "tags": [
+            "claim:demo-warning"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1064,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:10.943Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-75b3c1f66d8424a70628",
+          "file": "site.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-isolation keeps sample state in a demo namespace",
+          "ok": true,
+          "tags": [
+            "claim:demo-isolation"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:12.021Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-0376c3a2656c99881f79",
+          "file": "site.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-reset removes and recreates only sample state",
+          "ok": true,
+          "tags": [
+            "claim:demo-reset"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:12.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-3104b31dae43075f5cbf",
+          "file": "site.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-exit discards sample state when starting for real",
+          "ok": true,
+          "tags": [
+            "claim:demo-exit"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 901,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:13.388Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-e5baf7598c5d1cf27747",
+          "file": "site.spec.ts",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-first-party requests only this site during the demo flow",
+          "ok": true,
+          "tags": [
+            "claim:demo-first-party"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 657,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:14.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-38cb7a39259e3fd574e6",
+          "file": "site.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-offline reloads the sample after its first visit",
+          "ok": true,
+          "tags": [
+            "claim:demo-offline"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1015,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:15.047Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-9d810e1d8fb59f266594",
+          "file": "site.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "routes provide titles, metadata, focus, and an explicit not-found page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1606,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:16.097Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-f4a61eae8bd32049a3ff",
+          "file": "site.spec.ts",
+          "line": 89,
+          "column": 1
+        },
+        {
+          "title": "main, demo, legal, and not-found pages have no serious accessibility findings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:17.718Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-d5ef605e8a87999da06a",
+          "file": "site.spec.ts",
+          "line": 112,
+          "column": 1
+        },
+        {
+          "title": "responsive layout has no horizontal overflow and keeps every core target at least 44px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 643,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:21.605Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-f8c0f6498bf407708f1f",
+          "file": "site.spec.ts",
+          "line": 121,
+          "column": 1
+        },
+        {
+          "title": "primary demo wording names its result and the query entry opens the isolated route",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 865,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:22.270Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-a4fda7c1b8fcf6fe2e9b",
+          "file": "site.spec.ts",
+          "line": 153,
+          "column": 1
+        },
+        {
+          "title": "real links, reload, and browser Back preserve route titles and heading focus",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 737,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:23.147Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-420d3c0c187bd96dae87",
+          "file": "site.spec.ts",
+          "line": 167,
+          "column": 1
+        },
+        {
+          "title": "@claim:free-download downloads the packaged extension directly",
+          "ok": true,
+          "tags": [
+            "claim:free-download"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 3,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.355Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-4a6bfe5b08c4d72598ff",
+          "file": "site.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "@claim:no-account-screen opens the sample without sign-in or form fields",
+          "ok": true,
+          "tags": [
+            "claim:no-account-screen"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.384Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-83a0c06246f9080a3c0c",
+          "file": "site.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-warning opens the real check-note overlay on sample status data",
+          "ok": true,
+          "tags": [
+            "claim:demo-warning"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.399Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-9f96a68a86bb3f43ca03",
+          "file": "site.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-isolation keeps sample state in a demo namespace",
+          "ok": true,
+          "tags": [
+            "claim:demo-isolation"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.420Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-d91fe77d7d52a40001d6",
+          "file": "site.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-reset removes and recreates only sample state",
+          "ok": true,
+          "tags": [
+            "claim:demo-reset"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.441Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-3af7f784994533c84bbf",
+          "file": "site.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-exit discards sample state when starting for real",
+          "ok": true,
+          "tags": [
+            "claim:demo-exit"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.458Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-9506c9bc11f0ffbc2908",
+          "file": "site.spec.ts",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-first-party requests only this site during the demo flow",
+          "ok": true,
+          "tags": [
+            "claim:demo-first-party"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.476Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-967dfdd6ddbea0f036e4",
+          "file": "site.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "@claim:demo-offline reloads the sample after its first visit",
+          "ok": true,
+          "tags": [
+            "claim:demo-offline"
+          ],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                  "location": {
+                    "file": "/work/repo/tests/e2e/site.spec.ts",
+                    "line": 10,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.492Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Claim contracts run once in the desktop clean-state sandbox.",
+                      "location": {
+                        "file": "/work/repo/tests/e2e/site.spec.ts",
+                        "line": 10,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-84da558705177f432bda",
+          "file": "site.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "routes provide titles, metadata, focus, and an explicit not-found page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1388,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:25.500Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-b1d8dbc7107d9d5eb4d1",
+          "file": "site.spec.ts",
+          "line": 89,
+          "column": 1
+        },
+        {
+          "title": "main, demo, legal, and not-found pages have no serious accessibility findings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3586,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:26.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-4715f96dad2e1c438c83",
+          "file": "site.spec.ts",
+          "line": 112,
+          "column": 1
+        },
+        {
+          "title": "responsive layout has no horizontal overflow and keeps every core target at least 44px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 547,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:30.592Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-1b849788a529816b969b",
+          "file": "site.spec.ts",
+          "line": 121,
+          "column": 1
+        },
+        {
+          "title": "primary demo wording names its result and the query entry opens the isolated route",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 780,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:31.152Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-e1b35a40060067191db6",
+          "file": "site.spec.ts",
+          "line": 153,
+          "column": 1
+        },
+        {
+          "title": "real links, reload, and browser Back preserve route titles and heading focus",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-28T12:36:31.944Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-be22dd05e78b63a13238",
+          "file": "site.spec.ts",
+          "line": 167,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-28T12:36:08.134Z",
+    "duration": 26464.532000000003,
+    "expected": 18,
+    "skipped": 8,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

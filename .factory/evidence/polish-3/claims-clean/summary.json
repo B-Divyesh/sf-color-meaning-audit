@@ -1,0 +1,86 @@
+[
+  {
+    "id": "free-download",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:free-download'",
+    "exitCode": 0,
+    "durationSeconds": 7.8
+  },
+  {
+    "id": "no-account-screen",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:no-account-screen'",
+    "exitCode": 0,
+    "durationSeconds": 8
+  },
+  {
+    "id": "demo-warning",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-warning'",
+    "exitCode": 0,
+    "durationSeconds": 8.1
+  },
+  {
+    "id": "demo-isolation",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-isolation'",
+    "exitCode": 0,
+    "durationSeconds": 7.9
+  },
+  {
+    "id": "demo-reset",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-reset'",
+    "exitCode": 0,
+    "durationSeconds": 8
+  },
+  {
+    "id": "demo-exit",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-exit'",
+    "exitCode": 0,
+    "durationSeconds": 8.4
+  },
+  {
+    "id": "demo-first-party",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-first-party'",
+    "exitCode": 0,
+    "durationSeconds": 8
+  },
+  {
+    "id": "demo-offline",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-offline'",
+    "exitCode": 0,
+    "durationSeconds": 8.3
+  },
+  {
+    "id": "extension-check-notes",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-check-notes'",
+    "exitCode": 0,
+    "durationSeconds": 9.7
+  },
+  {
+    "id": "color-vision-views",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:color-vision-views'",
+    "exitCode": 0,
+    "durationSeconds": 11.9
+  },
+  {
+    "id": "extension-local-check",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-check'",
+    "exitCode": 0,
+    "durationSeconds": 9.3
+  },
+  {
+    "id": "extension-offline",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-offline'",
+    "exitCode": 0,
+    "durationSeconds": 9.6
+  },
+  {
+    "id": "extension-local-storage",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-storage'",
+    "exitCode": 0,
+    "durationSeconds": 8.3
+  },
+  {
+    "id": "extension-clear",
+    "command": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-clear'",
+    "exitCode": 0,
+    "durationSeconds": 9.4
+  }
+]

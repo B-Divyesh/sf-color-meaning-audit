@@ -1,0 +1,51 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  {
+    "path": "/demo/?demo=1",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  {
+    "path": "/privacy/",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  {
+    "path": "/terms/",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  {
+    "path": "/404.html",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  {
+    "path": "/not-a-real-route",
+    "status": 404,
+    "contentType": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  {
+    "path": "/downloads/signal-check-chrome.zip",
+    "status": 200,
+    "contentType": "application/zip",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  }
+]
