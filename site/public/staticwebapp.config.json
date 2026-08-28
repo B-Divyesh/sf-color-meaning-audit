@@ -15,5 +15,8 @@
       }
     }
   ],
-  "mimeTypes": { ".zip": "application/zip" }
+  "mimeTypes": {
+    ".avif": "image/avif",
+    ".zip": "application/zip"
+  }
 }

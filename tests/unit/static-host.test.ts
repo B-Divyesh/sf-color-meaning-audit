@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 type StaticWebAppConfig = {
   globalHeaders: Record<string, string>;
   routes: Array<{ route: string; headers?: Record<string, string> }>;
+  mimeTypes: Record<string, string>;
 };
 
 describe('static host caching policy', () => {
@@ -16,5 +17,6 @@ describe('static host caching policy', () => {
       route: '/assets/*',
       headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
     });
+    expect(config.mimeTypes['.avif']).toBe('image/avif');
   });
 });

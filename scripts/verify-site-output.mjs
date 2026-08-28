@@ -13,6 +13,9 @@ if (config.globalHeaders?.['Cache-Control'] !== 'public, max-age=0, must-revalid
 if (immutableAssetsRoute?.headers?.['Cache-Control'] !== 'public, max-age=31536000, immutable') {
   throw new Error('Fingerprint-named assets must receive the immutable cache policy.');
 }
+if (config.mimeTypes?.['.avif'] !== 'image/avif') {
+  throw new Error('AVIF assets must be served with the image/avif media type.');
+}
 
 const fingerprintedAsset = /-[A-Za-z0-9_-]{8}\.(?:avif|webp|jpg|css|js)$/;
 if (!assets.some((asset) => fingerprintedAsset.test(asset))) {
