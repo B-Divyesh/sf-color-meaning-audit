@@ -1,38 +1,73 @@
-# Signal Check — review 6 handoff
-
-> This review-only handoff supersedes the round-5 acceptance statement below. No product code changed in review 6; the current verdict is **FAIL**. See `.factory/review-6.md`.
+# Signal Check — polish 6 handoff
 
 ## Outcome
 
-Polish round 5 is complete. Every finding in `.factory/review-1.md` through `.factory/review-5.md` is closed and mapped in `.factory/polish-5.md`. The browser-extension artifact class, local-first behavior, and notebook-and-lens visual identity remain intact.
+Round 6 repaired and deployed release `672e0aa6b6b996a492c52ed8da72f087fc90b0d6`
+from review candidate `7da01b3dd7a6a853d96b8eaf46cfac8cca3550b9`.
+Signal Check remains a WXT/TypeScript MV3 browser extension with a static
+landing site and the careful-lab-notebook visual identity.
 
-The deployed source is `54ff710746c80e1fb309cbf59b275f3bef23cf02`. Static deployment `99f10b16-5f35-4647-a680-3de4cf23e71a5` is Ready at <https://color-meaning-audit.sociobot.in/>.
+The repair commits a reproducible npm lock/Playwright graph, removes the
+unsupported public artwork-origin claim, and makes offline `/demo/` use the
+same cached built route shell as online. Its emergency fallback also preserves
+the metadata, header, skip link, footer/legal links, focus, and usable Locate
+control. Public build identifiers are now 1.0.6.
 
-Round 5 adds a sticky demo boundary, a real install handoff with automatic ZIP download and Chromium steps, a resilient self-contained offline sample, the reviewed first-screen and README rewrites, install-route metadata/focus, and exact claim coverage. The visible build is 1.0.5.
+The static deployment completed to
+<https://color-meaning-audit.sociobot.in/>. The installed live home response
+contains `build 1.0.6`.
 
-## Verification
+## How to run and verify
 
-- Fresh clone: `/tmp/signal-check-polish-5-final-a01pRM/repo` at `54ff710746c80e1fb309cbf59b275f3bef23cf02`.
-- `npm ci`: 263 packages installed; zero vulnerabilities.
-- `npm test`: TypeScript passed; 9 unit tests passed; production extension/site/ZIP builds passed; 31 browser tests passed; 15 intentional duplicate mobile claim runs skipped.
-- Claims: all 14 exact commands in `.factory/claims.json` passed independently from that clean clone. Logs are in `.factory/evidence/polish-5/claims-final-clean/`.
-- Live browser suite: 20 passed; 8 intentional duplicate claim runs skipped. It covered demo isolation/reset/exit/offline, metadata, focus, Back, Axe, scrolling controls, mobile overflow, and 44 px targets.
-- Cold route verification: home, demo, install, privacy, terms, and 404 each have the correct title, `lang=en`, one h1, one main, named controls, alt text, and zero console/page errors.
-- Live link crawl: every rendered internal, asset, download, GitHub source, and issue link returned 200. `/not-a-real-route` returned the designed page with HTTP 404.
-- Live Lighthouse: 100 performance, 100 accessibility, 100 best practices, and 100 SEO; FCP 1.0 s, LCP 1.1 s, TBT 0 ms, CLS 0, transfer 35 KiB.
-- Accessibility: Playwright Axe found no serious or critical issue on home, demo, install, privacy, terms, or 404 at mobile and desktop widths.
-- Privacy/offline: whole-flow interception proves the demo is same-origin and the packaged check makes zero HTTP(S) requests. Both demo and packaged extension checks pass offline.
-- Artifact: the local and live ZIPs are byte-identical at SHA-256 `6637e919282bbae8e1d656d62eeef81d69c2440da8a4f8c888b046ab6ea1cb02`.
-- Budgets: total emitted site JavaScript including the service worker is 18,388 bytes; CSS 15,467 bytes; fonts 0 bytes; mobile hero WebP 24,818 bytes; AVIF 27,044 bytes.
+```sh
+npm ci
+npm test
+npm run build
+```
 
-Primary evidence is under `.factory/evidence/polish-5/`. Run locally with `npm ci && npm test`; build release artifacts with `npm run build`.
+Use <https://color-meaning-audit.sociobot.in/demo/?demo=1> for the isolated
+sample. It opens the real warning immediately and stores only
+`demo:signal-check:sample-state`; Reset recreates that state, and Start for
+real removes it before opening the ZIP-backed install flow.
+
+Run every command listed in `.factory/claims.json` independently from a clean
+clone. The full finding-to-evidence map is in `.factory/polish-6.md`.
+
+## Verification evidence
+
+- Fresh clone: `/tmp/signal-check-polish-6-24yrdP/repo` at `672e0aa`, clean
+  working tree. `npm ci` installed 263 packages with zero vulnerabilities and
+  resolved only `playwright-core@1.58.2`.
+- Fresh-clone `npm test`: TypeScript passed; 11 unit tests passed; extension,
+  site, ZIP, and static-output builds passed; 31 browser tests passed; 15
+  intentional duplicate mobile claim runs skipped.
+- All 14 exact claim commands passed independently in that clone: demo
+  isolation/reset/exit/first-party/offline, packaged extension views/privacy/
+  offline/storage/clear, download, and no-account behavior.
+- Local `npm run build` produced `dist/extension/chrome-mv3/`, `dist/site/`,
+  and `dist/site/downloads/signal-check-chrome.zip`. Site JS plus the worker
+  is about 22.3 KB uncompressed, CSS is 15.46 KB, fonts are 0 KB, and the
+  mobile hero WebP is 24.81 KB.
+- Cold live `verify-url.sh` reports are under `.factory/evidence/polish-6/`.
+  Home, demo, install, privacy, terms, and 404 all had zero console/page
+  errors, `lang=en`, one h1, one main landmark, titles, and named controls.
+  `/not-a-real-route` returned HTTP 404.
+- Live site suite:
+  `PLAYWRIGHT_BASE_URL=https://color-meaning-audit.sociobot.in xvfb-run -a npx playwright test tests/e2e/site.spec.ts`
+  passed 20 checks with 8 intentional duplicate claim skips. It includes Axe,
+  mobile layout, metadata, focus/Back, demo boundaries, first-party requests,
+  and the cached offline route shell.
+- Lighthouse retry at
+  `.factory/evidence/polish-6/lighthouse-live-retry.json` scored 100
+  performance, 100 accessibility, 100 best practices, and 100 SEO. FCP/LCP
+  were 465 ms, TBT 0 ms, CLS 0, and transferred bytes 35,473.
+
+An initial Lighthouse artifact-collection run hit the known Chromium
+`TARGET_CRASHED` infrastructure failure after completing its category scores.
+The retry with `--disable-dev-shm-usage --disable-gpu` completed normally; the
+full Playwright browser suite and clean-clone claims pass independently.
 
 ## Known gaps and next steps
 
-Review 6 found three remaining items:
-
-1. **F-6-1 (blocking):** the repository has no lockfile. `npm ci` cannot run, and a normal clean install resolves incompatible Playwright types so `npm test` fails at typecheck.
-2. **F-6-2:** the public footer says the hero is original project artwork without a corresponding claim/test.
-3. **F-6-3:** the offline service-worker demo is a reduced route shell without normal navigation, legal links, metadata, route focus, or an explanation for its disabled Locate action.
-
-Review verification: fresh 390 px and desktop live checks passed the first-read, demo, metadata, link, and visual checks; all 14 exact claim commands passed after a diagnostic clean-clone install; `npm run build` passed; `npm test` failed as F-6-1 describes. After repair, verify from a new clone with `npm ci && npm test`, rerun every claim command, and repeat the offline route-shell test.
+None. Every review finding is closed, and the live site was cold-checked after
+deployment.

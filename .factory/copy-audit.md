@@ -1,4 +1,4 @@
-# Copy audit — polish round 5
+# Copy audit — polish round 6
 
 Counts treat a hyphenated term, URL, command, or path as one word. Navigation labels and the product name alone are excluded. README code blocks are excluded; every prose sentence and numbered instruction is included below. No sentence exceeds 22 words, and no banned marketing word appears.
 
@@ -43,9 +43,9 @@ Counts treat a hyphenated term, URL, command, or path as one word. Navigation la
 | 5 | See it before you install |
 | 4 | Give color a backup. |
 | 4 | Open the sample warning |
-| 5 | Chromium extension · version 1.0.5 · free |
+| 5 | Chromium extension · version 1.0.6 · free |
 | 6 | Checks color-only signals on the visible page. |
-| 12 | Built by Param Factory · build 1.0.5 · hero artwork is original project artwork. |
+| 6 | Built by Param Factory · build 1.0.6 |
 
 ## Install page
 
@@ -122,3 +122,11 @@ The round-5 jargon check found no unexplained implementation term in reader-faci
 | Installation file | extension ZIP |
 
 First-screen read-aloud check: “For people with color-vision differences who need to act, check charts and dashboards for meaning carried only by color. Try sample data to see a color-only warning.”
+
+## Catalog description
+
+| Words | Text |
+| ---: | --- |
+| 10 | Check color-only chart and dashboard signals before making a decision. |
+
+The catalog line starts with a verb, is 70 characters, and has no marketing claim.
