@@ -1,0 +1,14 @@
+{
+  "url": "https://color-meaning-audit.sociobot.in/install/",
+  "loadMs": 826,
+  "errors": [],
+  "a11y": {
+    "title": "Install — Signal Check",
+    "lang": "en",
+    "h1": 1,
+    "main": true,
+    "imgsMissingAlt": 0,
+    "buttonsUnlabeled": 0,
+    "textLength": 712
+  }
+}
