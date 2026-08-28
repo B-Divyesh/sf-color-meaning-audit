@@ -31,6 +31,10 @@ test('@claim:demo-warning opens the real check-note overlay on sample status dat
   await expect(overlay).toBeVisible();
   await expect(overlay.getByRole('dialog')).toBeVisible();
   await expect(overlay.getByRole('heading', { level: 2 })).toHaveText(/signal to verify/i);
+  await expect(overlay.getByText('Two nearby signals may look alike', { exact: false })).toBeVisible();
+  await expect(overlay.getByText('No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.', { exact: true })).toBeVisible();
+  await expect(overlay.getByText(/Billing handshake.*Token refresh.*may look alike/i)).toHaveCount(0);
+  await expect(overlay.getByText(/legend has words/i)).toHaveCount(0);
   await expect(overlay.getByRole('button', { name: 'Locate these signals' })).toBeVisible();
 });
 
@@ -78,7 +82,7 @@ test('@claim:demo-offline reloads the sample after its first visit', async ({ co
   await expect(page.getByRole('heading', { name: 'A warning is already open.' })).toBeVisible();
   await expect(page.locator('#signal-check-overlay-host')).toHaveAttribute('role', 'dialog');
   await expect(page.getByText('Demo — sample data, nothing is saved to your real checks.')).toBeVisible();
-  await expect(page.getByText(/Seek a label, shape, pattern, or written value/i)).toBeVisible();
+  await expect(page.getByText('No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.', { exact: true })).toBeVisible();
   await context.setOffline(false);
 });
 
@@ -148,6 +152,7 @@ test('responsive layout has no horizontal overflow and keeps every core target a
 
 test('primary demo wording names its result and the query entry opens the isolated route', async ({ page }) => {
   await page.goto('/');
+  await expect(page.locator('.hero-lede')).toHaveText('For people with color-vision differences who need to act, check charts and dashboards for meaning carried only by color.');
   const sample = page.getByRole('link', { name: 'Try sample data — see a color-only warning' });
   await expect(sample).toBeVisible();
   await sample.click();

@@ -15,10 +15,10 @@
   },
   {
     "id": "demo-warning",
-    "claim": "The sample audit opens a color-only status warning",
+    "claim": "The sample opens a truthful color-only status warning",
     "where": "landing CTA, demo page, README",
     "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-warning'",
-    "sandbox": "fresh browser context at /demo/?demo=1; assert the real check-note dialog and Locate control"
+    "sandbox": "fresh browser context at /demo/?demo=1; assert the real check-note dialog says no written label exists and never treats service names as status cues"
   },
   {
     "id": "demo-isolation",
@@ -57,10 +57,10 @@
   },
   {
     "id": "extension-check-notes",
-    "claim": "Signal Check opens check notes with another cue to use",
+    "claim": "Signal Check uses only explicit status labels as text cues",
     "where": "landing, README, extension popup",
     "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-check-notes'",
-    "sandbox": "fresh browser page; run the shipped overlay on a red/green sample and assert its dialog, swatches, and cue text"
+    "sandbox": "fresh packaged extension profile; check unlabeled dots beside service names and explicitly named Ready/Blocked dots; assert different truthful guidance"
   },
   {
     "id": "color-vision-views",

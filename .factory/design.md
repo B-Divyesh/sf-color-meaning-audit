@@ -40,7 +40,8 @@ An 8 px base rhythm with 4 px for small optical corrections. Page measures cap a
 
 - The one primary verb is **Check this page**.
 - While scanning, three pencil marks advance to show real work.
-- Results arrive as a numbered field-note list. Selecting a finding locates and outlines the source element on the page.
+- Results arrive as a numbered check-note list. Selecting a finding locates and outlines the source element on the page.
+- Text counts as an alternate cue only when the mark has an explicit accessible name. Nearby row copy is evidence context, not a status label.
 - The overlay is a movable paper sheet pinned to the upper-right; Escape closes it and focus returns to the launcher.
 - Deficiency choice is a real radio group with plain-language options. The selected model changes the local comparison only and is never presented as a diagnosis.
 - Helpful alternatives are concrete: read the adjacent label, look for a shape, compare position, or ask for a text value.

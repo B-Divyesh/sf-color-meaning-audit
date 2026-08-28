@@ -15,7 +15,7 @@ test.beforeEach(({}, testInfo) => {
   }
 });
 
-test('@claim:extension-check-notes opens accessible check notes with an alternate cue', async ({ page }) => {
+test('the palette overlay opens accessible check notes with alternate-cue guidance', async ({ page }) => {
   await page.goto('/');
   await showOverlay(page, [{ colorA: '#c04040', colorB: '#409060', confidence: 61, share: 48 }], 'deutan');
 

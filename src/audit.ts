@@ -139,11 +139,16 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
     return style.visibility !== 'hidden' && style.display !== 'none' && Number(style.opacity) > 0 && rect.width >= 6 && rect.height >= 6 && rect.bottom >= 0 && rect.top <= innerHeight && rect.right >= 0 && rect.left <= innerWidth;
   };
   const labelFor = (element: Element): string => {
-    const direct = element.getAttribute('aria-label') || element.getAttribute('title');
-    if (direct) return direct.trim().slice(0, 70);
-    const owner = element.closest('li, [role="listitem"], [class*="legend"], [class*="status"], [class*="badge"]');
-    const text = owner?.textContent?.replace(/\s+/g, ' ').trim();
-    return text && text.length <= 90 ? text : '';
+    const normalize = (value: string | null | undefined) => value?.replace(/\s+/g, ' ').trim().slice(0, 70) || '';
+    const namedGraphic = element.closest('svg[aria-label], svg[aria-labelledby], [role="img"][aria-label], [role="img"][aria-labelledby]');
+    const labelOwner = element.matches('[aria-label], [aria-labelledby], [title]') ? element : namedGraphic;
+    if (!labelOwner) return '';
+
+    const direct = normalize(labelOwner.getAttribute('aria-label') || labelOwner.getAttribute('title'));
+    if (direct) return direct;
+
+    const labelledBy = labelOwner.getAttribute('aria-labelledby')?.split(/\s+/).filter(Boolean) || [];
+    return normalize(labelledBy.map((id) => document.getElementById(id)?.textContent || '').join(' '));
   };
 
   type Candidate = { element: Element; color: number[]; rect: DOMRect; round: boolean; label: string; id: string };
@@ -178,13 +183,14 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
       const simulated = distance(simulate(first.color), simulate(second.color));
       const near = Math.hypot(first.rect.x - second.rect.x, first.rect.y - second.rect.y) < 640;
       if (sizeRatio <= 1.8 && first.round === second.round && near && original > 60 && simulated < 72 && simulated / original < .58) {
-        const names = first.label && second.label && first.label !== second.label ? `“${first.label}” and “${second.label}”` : 'Two nearby signals';
+        const hasDistinctLabels = Boolean(first.label && second.label && first.label !== second.label);
+        const names = hasDistinctLabels ? `“${first.label}” and “${second.label}”` : 'Two nearby signals';
         domFindings.push({
           a: first,
           b: second,
           title: `${names} may look alike`,
-          detail: first.label || second.label
-            ? 'The legend has words, but the marks share the same shape. Match a label, line pattern, or position before acting.'
+          detail: hasDistinctLabels
+            ? 'Written labels are tied to these marks. Match the written label before acting.'
             : 'No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.',
         });
         used.add(first.id); used.add(second.id);
@@ -230,9 +236,9 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
     </style>
     <section class="sheet" role="dialog" aria-modal="false" aria-labelledby="sc-title" tabindex="-1">
       <header><div><p class="eyebrow">Signal Check · ${modelName}</p><h2 id="sc-title">${total ? `${total} signal${total === 1 ? '' : 's'} to verify` : 'No color-only signals found'}</h2></div><button class="close" type="button" aria-label="Close Signal Check">×</button></header>
-      <p class="summary">${total ? 'These colors can become hard to tell apart in the selected comparison. Use another cue before you act.' : 'The visible area did not contain a repeated color pair that our local check could confidently flag.'}</p>
+      <p class="summary">${total ? 'These colors can become hard to tell apart in the color-vision view you chose. Use another cue before you act.' : 'The visible area did not contain a repeated color pair that our local check could confidently flag.'}</p>
       <div class="findings"></div>
-      <p class="fine">Advisory, not a diagnosis. Only the visible area was checked; charts drawn on canvas may need a text table or source labels.</p>
+      <p class="fine">A second check, not a diagnosis. Only the visible area was checked; charts drawn on canvas may need a text table or source labels.</p>
     </section>
     <button class="return" type="button" hidden>Return to Signal Check notes</button>`;
 

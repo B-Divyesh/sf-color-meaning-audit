@@ -1,6 +1,6 @@
-# Copy audit — polish round 2
+# Copy audit — polish round 3
 
-Counts treat a hyphenated term as one word. Navigation labels and the product name alone are omitted. No sentence exceeds 22 words, and no banned marketing word appears.
+Counts treat a hyphenated term, URL, command, or path as one word. Navigation labels and the product name alone are excluded. README code blocks are excluded; every prose sentence and numbered instruction is included below. No sentence exceeds 22 words, and no banned marketing word appears.
 
 ## Landing page
 
@@ -8,8 +8,7 @@ Counts treat a hyphenated term as one word. Navigation labels and the product na
 | ---: | --- |
 | 8 | A field check for the page in front of you |
 | 6 | Check color-only signals before you act. |
-| 11 | Check charts and status dashboards for meaning carried only by color. |
-| 12 | For people with color-vision differences who need to act on a page. |
+| 19 | For people with color-vision differences who need to act, check charts and dashboards for meaning carried only by color. |
 | 7 | Try sample data — see a color-only warning |
 | 3 | Download for Chromium |
 | 3 | Free to download |
@@ -44,9 +43,9 @@ Counts treat a hyphenated term as one word. Navigation labels and the product na
 | 5 | See it before you install |
 | 4 | Give color a backup. |
 | 4 | Open the sample warning |
-| 5 | Chromium extension · version 1.0.2 · free |
+| 5 | Chromium extension · version 1.0.3 · free |
 | 6 | Checks color-only signals on the visible page. |
-| 12 | Built by Param Factory · build 1.0.2 · hero artwork is original project artwork. |
+| 12 | Built by Param Factory · build 1.0.3 · hero artwork is original project artwork. |
 
 ## README
 
@@ -57,22 +56,36 @@ Counts treat a hyphenated term as one word. Navigation labels and the product na
 | 6 | Try the isolated sample at `/demo/?demo=1`. |
 | 7 | It opens a color-only status warning immediately. |
 | 6 | The sample has no account screen. |
-| 7 | Its state uses a `demo:` browser key. |
-| 7 | Resetting the demo recreates only that key. |
+| 6 | It saves only temporary demo data. |
+| 7 | Resetting the demo recreates only that sample. |
 | 14 | A Chromium extension with Deutan and Protan red-green views, plus a Tritan blue-sensitive view. |
-| 13 | Check notes that point to a label, shape, pattern, written value, or position. |
-| 13 | A static site with a sample audit, privacy policy, terms, and extension download. |
+| 10 | Check notes that say when a written status label is missing. |
+| 13 | A static site with a sample warning, privacy policy, terms, and extension download. |
 | 9 | The sample warning reloads offline after its first visit. |
 | 7 | Node.js 22+ and npm 10+ are required. |
-| 8 | Chromium for Playwright is supplied by the factory image. |
-| 6 | `npm run build` creates the extension, site, and downloadable ZIP. |
+| 9 | Chromium for Playwright is supplied by the factory image. |
+| 14 | The end-to-end command uses Xvfb on Linux to invoke the extension’s real toolbar shortcut. |
+| 11 | This grants the same temporary page access as a user click. |
+| 8 | `npm run build` creates `dist/extension/chrome-mv3/`, `dist/site/`, and `dist/site/downloads/signal-check-chrome.zip`. |
+| 4 | Run `npm run build`. |
+| 4 | Open `chrome://extensions` or `edge://extensions`. |
+| 3 | Enable Developer mode. |
+| 6 | Choose Load unpacked and select `dist/extension/chrome-mv3`. |
 | 6 | Open a chart or status dashboard. |
-| 10 | Choose Signal Check from the toolbar, then choose Check this page. |
+| 11 | Choose Signal Check from the toolbar, then choose Check this page. |
 | 13 | The extension stores the selected view and last result in browser-local extension storage. |
 | 11 | It does not request network resources while it builds check notes. |
-| 8 | Every visitor-facing claim appears in `.factory/claims.json`. |
+| 6 | See the privacy policy and terms. |
+| 6 | Every visitor-facing claim appears in `.factory/claims.json`. |
 | 8 | Run each listed command from a clean checkout. |
 | 11 | The sample storage boundary and reset path are documented in `.factory/demo.md`. |
+| 8 | Deploy `dist/site` as the static site for `https://color-meaning-audit.sociobot.in`. |
+| 5 | The work order performs deployment. |
+| 10 | `staticwebapp.config.json` supplies headers, route fallback, and the designed 404 response. |
+| 12 | See `.factory/brief.json` for scope, `.factory/design.md` for design provenance, and `.factory/handoff.md` for verification. |
+| 5 | Licensed under the MIT License. |
+
+README headings are **What ships**, **Run and test**, **Install the extension**, **Claims and demo**, and **Deploy**. They are distinct and make sense out of context.
 
 ## Terminology
 
@@ -84,4 +97,4 @@ Counts treat a hyphenated term as one word. Navigation labels and the product na
 | Isolated mode | demo |
 | Color comparison | color-vision view |
 
-First-screen read-aloud check: “Check charts and status dashboards for meaning carried only by color. For people with color-vision differences who need to act on a page. Try sample data to see a color-only warning.”
+First-screen read-aloud check: “For people with color-vision differences who need to act, check charts and dashboards for meaning carried only by color. Try sample data to see a color-only warning.”

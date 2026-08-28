@@ -51,7 +51,7 @@ checkButton.addEventListener('click', async () => {
     const result = execution[0]?.result as AuditResult | undefined;
     if (!result) throw new Error('The page did not return a result. Reload it and try once more.');
     setStatus(result.count
-      ? `<strong>${result.count} signal${result.count === 1 ? '' : 's'} to verify.</strong> The field-note overlay is open on the page.`
+      ? `<strong>${result.count} signal${result.count === 1 ? '' : 's'} to verify.</strong> The check notes are open on the page.`
       : '<strong>No likely color-only signals found.</strong> This is not a guarantee; check tables or labels for important decisions.', 'success');
     await chrome.storage.local.set({ lastResult: { count: result.count, at: Date.now() } });
   } catch (error) {

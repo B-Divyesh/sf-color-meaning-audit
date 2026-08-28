@@ -2,13 +2,13 @@
 
 Signal Check is a Chromium extension for people with color-vision differences who need to act on charts or status dashboards. It opens check notes that name another cue to use before acting.
 
-Try the isolated sample at [`/demo/?demo=1`](https://color-meaning-audit.sociobot.in/demo/?demo=1). It opens a color-only status warning immediately. The sample has no account screen. Its state uses a `demo:` browser key. Resetting the demo recreates only that key.
+Try the isolated sample at [`/demo/?demo=1`](https://color-meaning-audit.sociobot.in/demo/?demo=1). It opens a color-only status warning immediately. The sample has no account screen. It saves only temporary demo data. Resetting the demo recreates only that sample.
 
 ## What ships
 
 - A Chromium extension with Deutan and Protan red-green views, plus a Tritan blue-sensitive view.
-- Check notes that point to a label, shape, pattern, written value, or position.
-- A static site with a sample audit, privacy policy, terms, and extension download.
+- Check notes that say when a written status label is missing.
+- A static site with a sample warning, privacy policy, terms, and extension download.
 - The sample warning reloads offline after its first visit.
 
 ## Run and test

@@ -95,7 +95,14 @@ async function openRealCheckFixture(): Promise<RealCheckFixture> {
   return { context, fixture, popup };
 }
 
-async function loadSignalPair(fixture: Page, first: string, second: string): Promise<void> {
+async function loadSignalPair(
+  fixture: Page,
+  first: string,
+  second: string,
+  labels: { first: string; second: string } | null = { first: 'Ready', second: 'Blocked' },
+): Promise<void> {
+  const firstLabel = labels ? `aria-label="${labels.first}"` : 'aria-hidden="true"';
+  const secondLabel = labels ? `aria-label="${labels.second}"` : 'aria-hidden="true"';
   await fixture.setContent(`
     <!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Signal Check test fixture</title><style>
@@ -107,8 +114,8 @@ async function loadSignalPair(fixture: Page, first: string, second: string): Pro
       .first { background: ${first}; }
       .second { background: ${second}; }
     </style></head><body><main><h1>Release signals</h1><div class="status-list">
-      <div class="status"><span class="status-dot first" aria-label="Ready"></span><span>Ready</span></div>
-      <div class="status"><span class="status-dot second" aria-label="Blocked"></span><span>Blocked</span></div>
+      <div class="status"><span class="status-dot first" ${firstLabel}></span><span>Billing handshake</span></div>
+      <div class="status"><span class="status-dot second" ${secondLabel}></span><span>Token refresh</span></div>
     </div></main></body></html>
   `);
 }
@@ -117,6 +124,7 @@ async function activateFixtureAndCheck(check: RealCheckFixture): Promise<void> {
   await check.popup.evaluate(`document.querySelector('#check').click()`);
   try {
     await expect(check.fixture.locator('#signal-check-overlay-host')).toBeVisible({ timeout: 15_000 });
+    await expect.poll(() => check.popup.evaluate<boolean>(`!document.querySelector('#check').disabled`)).toBe(true);
   } catch (error) {
     const diagnostics = await check.popup.evaluate(`(async () => ({ status: document.querySelector('#status').textContent, tabs: (await chrome.tabs.query({ active: true, currentWindow: true })).map(({ id, url }) => ({ id, url })) }))()`);
     throw new Error(`The real extension check did not open an overlay: ${JSON.stringify(diagnostics)}. ${String(error)}`);
@@ -234,6 +242,30 @@ test('@claim:extension-local-storage saves the chosen view and last result in ex
     expect((saved.lastResult as { count: number }).count).toBe(2);
   } finally {
     await context.close();
+  }
+});
+
+test('@claim:extension-check-notes uses only explicit status labels as text cues', async () => {
+  const check = await openRealCheckFixture();
+  try {
+    await loadSignalPair(check.fixture, 'rgb(64, 144, 96)', 'rgb(192, 64, 64)', null);
+    await activateFixtureAndCheck(check);
+
+    let overlay = check.fixture.locator('#signal-check-overlay-host');
+    await expect(overlay.getByText('Two nearby signals may look alike', { exact: false })).toBeVisible();
+    await expect(overlay.getByText('No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.', { exact: true })).toBeVisible();
+    await expect(overlay.getByText(/Billing handshake.*Token refresh.*may look alike/i)).toHaveCount(0);
+    await expect(overlay.getByText(/legend has words/i)).toHaveCount(0);
+
+    await loadSignalPair(check.fixture, 'rgb(64, 144, 96)', 'rgb(192, 64, 64)');
+    await activateFixtureAndCheck(check);
+
+    overlay = check.fixture.locator('#signal-check-overlay-host');
+    const labelledNotes = await overlay.locator('.sheet').innerText();
+    expect(labelledNotes).toContain('“Ready” and “Blocked” may look alike');
+    expect(labelledNotes).toContain('Written labels are tied to these marks. Match the written label before acting.');
+  } finally {
+    await check.context.close();
   }
 });
 
