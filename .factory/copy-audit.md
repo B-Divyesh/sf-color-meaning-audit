@@ -1,4 +1,4 @@
-# Copy audit — polish round 3
+# Copy audit — polish round 4
 
 Counts treat a hyphenated term, URL, command, or path as one word. Navigation labels and the product name alone are excluded. README code blocks are excluded; every prose sentence and numbered instruction is included below. No sentence exceeds 22 words, and no banned marketing word appears.
 
@@ -43,9 +43,9 @@ Counts treat a hyphenated term, URL, command, or path as one word. Navigation la
 | 5 | See it before you install |
 | 4 | Give color a backup. |
 | 4 | Open the sample warning |
-| 5 | Chromium extension · version 1.0.3 · free |
+| 5 | Chromium extension · version 1.0.4 · free |
 | 6 | Checks color-only signals on the visible page. |
-| 12 | Built by Param Factory · build 1.0.3 · hero artwork is original project artwork. |
+| 12 | Built by Param Factory · build 1.0.4 · hero artwork is original project artwork. |
 
 ## README
 
@@ -64,7 +64,7 @@ Counts treat a hyphenated term, URL, command, or path as one word. Navigation la
 | 9 | The sample warning reloads offline after its first visit. |
 | 7 | Node.js 22+ and npm 10+ are required. |
 | 9 | Chromium for Playwright is supplied by the factory image. |
-| 14 | The end-to-end command uses Xvfb on Linux to invoke the extension’s real toolbar shortcut. |
+| 14 | On Linux, the test command opens a test browser and uses the extension button. |
 | 11 | This grants the same temporary page access as a user click. |
 | 8 | `npm run build` creates `dist/extension/chrome-mv3/`, `dist/site/`, and `dist/site/downloads/signal-check-chrome.zip`. |
 | 4 | Run `npm run build`. |
@@ -86,6 +86,8 @@ Counts treat a hyphenated term, URL, command, or path as one word. Navigation la
 | 5 | Licensed under the MIT License. |
 
 README headings are **What ships**, **Run and test**, **Install the extension**, **Claims and demo**, and **Deploy**. They are distinct and make sense out of context.
+
+The round-4 jargon check found no unexplained implementation term in reader-facing prose. The Linux test note describes its behavior without requiring readers to know the display-server tool it uses.
 
 ## Terminology
 

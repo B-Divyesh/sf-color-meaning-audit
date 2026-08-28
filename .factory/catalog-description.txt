@@ -1,1 +1,1 @@
-Find color-only signals in charts and dashboards before you act.
+Check charts and dashboards for color-only meaning before you act.

@@ -23,7 +23,7 @@ npm test             # typecheck, unit tests, clean build, browser and axe tests
 npm run build        # creates dist/extension and dist/site
 ```
 
-The end-to-end command uses Xvfb on Linux to invoke the extension’s real toolbar shortcut. This grants the same temporary page access as a user click.
+On Linux, the test command opens a test browser and uses the extension button. This grants the same temporary page access as a user click.
 
 `npm run build` creates `dist/extension/chrome-mv3/`, `dist/site/`, and `dist/site/downloads/signal-check-chrome.zip`.
 
