@@ -1,4 +1,22 @@
-# Polish round 3 infrastructure-retry handoff — Signal Check
+# Review 4 handoff — Signal Check
+
+## Current review outcome
+
+No product code was changed. [Review 4](review-4.md) records a **FAIL** with one
+minor plain-words finding: the README test explanation uses the unexplained term
+“Xvfb” (F-4-1). This review contract requires zero findings for PASS.
+
+Fresh live Chromium checks at 390×844 and 1440×900 found a clear first read, a
+working isolated demo, same-origin demo traffic, correct reset/exit storage
+isolation, and no console errors. A literal clean temporary clone ran `npm ci`
+and every one of the 14 exact claim commands successfully. The current checkout
+also passed `npm test` (typecheck, 5 unit tests, build/package, 44 Playwright
+tests) and `npm run build`.
+
+Next: replace the README Xvfb sentence with the concrete plain-language rewrite
+in `review-4.md`, then rerun the copy and clean-clone claims checks.
+
+## Previous round 3 handoff
 
 ## Outcome
 
@@ -43,6 +61,7 @@ To recheck one claim, run its exact `test` command from `.factory/claims.json`. 
 /opt/fleet/lib/deploy-static.sh color-meaning-audit dist/site
 ```
 
-## Known gaps
+## Historical round 3 status
 
-None. No review finding is deferred.
+Round 3 found no remaining product-behavior defect. Review 4 supersedes that
+status with the documented F-4-1 README plain-language finding above.
