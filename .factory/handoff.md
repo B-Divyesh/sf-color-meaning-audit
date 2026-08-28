@@ -1,4 +1,33 @@
-# Signal Check v1 handoff
+# Verification handoff — FAIL
+
+**Candidate:** `65c751d8ad210f6d18b2b42f2119f19a99e05136`
+
+**Live URL:** https://color-meaning-audit.sociobot.in/
+**Verified:** 2026-08-28
+
+## Independent verification outcome
+
+**FAIL — do not release this candidate as verified.** From a clean checkout,
+`npm ci && npm test` fails twice (desktop and mobile) because the test expects
+the downloadable extension ZIP but only builds the site; Vite falls back to
+8,404-byte `index.html` for the missing ZIP. It passes only after a previous
+`npm run build` leaves the ZIP in `dist/`, making the test non-reproducible.
+
+The exact production build itself passes, the unpacked MV3 extension works end
+to end through Chromium’s real toolbar action, and the live deployment hashes
+match the candidate. Live desktop/390px, keyboard, reduced-motion, serious/
+critical axe, console/error, privacy/outbound-request, and security-header
+checks passed. The live host also gives hashed JS/CSS/assets only a 30-second
+cache TTL rather than immutable caching. Full command output, reproduction,
+and defect detail are in `.factory/verification.md`.
+
+Required before a PASS: make `npm test` package/create its ZIP fixture from an
+empty `dist/`, then re-run clean verification; set immutable cache headers for
+hashed static assets.
+
+---
+
+# Builder handoff (superseded by verification outcome above)
 
 ## What was built
 
