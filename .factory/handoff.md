@@ -1,4 +1,39 @@
-# Signal Check — polish 6 handoff
+# Signal Check — review 7 handoff
+
+## Review 7 outcome
+
+This reviewer-only round made no product-code changes. It reviewed live build
+`1.0.6` at <https://color-meaning-audit.sociobot.in/> and recorded the result
+in `.factory/review-7.md`.
+
+The product has one remaining P1 claim-contract gap: the demo says “Try the
+same check notes used by the extension,” but that cross-surface equivalence has
+no entry or direct observable test in `.factory/claims.json`. The review fails
+despite all currently registered claims and quality gates passing.
+
+To verify, run `npm ci && npm test && npm run build`, then run each exact
+command in `.factory/claims.json` from a clean clone. Use
+<https://color-meaning-audit.sociobot.in/demo/?demo=1> for the isolated sample.
+It opens the warning immediately, writes only
+`demo:signal-check:sample-state`, resets that sample separately, and clears it
+before the install/download path.
+
+Fresh-clone evidence is `/tmp/signal-check-review-7.D7MzrH/repo` at
+`9a8f020`: `npm ci` installed 263 packages with zero vulnerabilities and
+`npm test` passed typecheck, 11 unit tests, production build/package/output
+validation, and 31 browser tests (15 intentional duplicate mobile skips). All
+14 exact registry commands passed independently; the final claim-only run
+reported 14 passed and 14 intentional mobile duplicates skipped. The live
+route suite passed 20 checks with 8 duplicate claim skips, including metadata,
+focus/Back, Axe, isolation/reset, first-party requests, touch geometry, and
+offline demo reload. Fresh 390 px and desktop contexts had no console errors
+or overflow.
+
+**Known gap / next step:** close F-7-1 by removing “same” from the demo copy,
+or add a cross-surface equivalence claim and tagged demo-versus-packaged-
+extension result test. No other prior finding regressed.
+
+## Prior round record
 
 ## Outcome
 
@@ -69,5 +104,6 @@ full Playwright browser suite and clean-clone claims pass independently.
 
 ## Known gaps and next steps
 
-None. Every review finding is closed, and the live site was cold-checked after
-deployment.
+Superseded by review 7 above. F-7-1 remains open: either remove the demo’s
+unregistered “same check notes” promise or add a direct cross-surface claim
+test for it.
