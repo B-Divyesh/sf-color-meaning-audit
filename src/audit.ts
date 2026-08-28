@@ -110,6 +110,15 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
   const rootId = 'signal-check-overlay-host';
   const oldHost = document.getElementById(rootId);
   if (oldHost) oldHost.remove();
+  const restoreHighlight = (node: Element) => {
+    const element = node as HTMLElement;
+    element.style.outline = element.getAttribute('data-signal-check-old-outline') || '';
+    element.style.outlineOffset = element.getAttribute('data-signal-check-old-offset') || '';
+    element.removeAttribute('data-signal-check-highlighted');
+    element.removeAttribute('data-signal-check-old-outline');
+    element.removeAttribute('data-signal-check-old-offset');
+  };
+  document.querySelectorAll('[data-signal-check-highlighted]').forEach(restoreHighlight);
   document.querySelectorAll('[data-signal-check-id]').forEach((node) => node.removeAttribute('data-signal-check-id'));
 
   const modelMatrices: Record<string, number[][]> = {
@@ -201,8 +210,8 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
       h2 { margin:0; font-size:23px; line-height:1.15; }
       .summary { margin:14px 0; font-size:16px; line-height:1.5; }
       .note { margin:0 0 10px; padding:10px; border:1px solid #8fa3a1; background:rgba(255,253,246,.92); }
-      .note h3 { margin:0 0 5px; font-size:15px; line-height:1.35; }
-      .note p { margin:0; color:#37474f; font-size:14px; line-height:1.45; }
+      .note h3 { margin:0 0 5px; font-size:16px; line-height:1.35; }
+      .note p { margin:0; color:#37474f; font-size:16px; line-height:1.45; }
       .swatches { display:flex; gap:5px; margin-bottom:6px; }
       .swatch { width:28px; height:11px; border:1px solid #172c35; }
       button { min-width:44px; min-height:44px; border:2px solid #3e286b; border-radius:3px; background:#fffdf6; color:#3e286b; font:700 14px/1 ui-sans-serif,-apple-system,sans-serif; cursor:pointer; }
@@ -228,8 +237,14 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
     article.innerHTML = `<h3>${index + 1}. ${escape(finding.title)}</h3><p>${escape(finding.detail)}</p><button class="locate" type="button">Locate these signals</button>`;
     article.querySelector('button')!.addEventListener('click', () => {
       [finding.a.element, finding.b.element].forEach((element) => {
-        (element as HTMLElement).style.setProperty('outline', '4px solid #a65d0c', 'important');
-        (element as HTMLElement).style.setProperty('outline-offset', '4px', 'important');
+        const target = element as HTMLElement;
+        if (!target.hasAttribute('data-signal-check-highlighted')) {
+          target.setAttribute('data-signal-check-highlighted', 'true');
+          target.setAttribute('data-signal-check-old-outline', target.style.outline);
+          target.setAttribute('data-signal-check-old-offset', target.style.outlineOffset);
+        }
+        target.style.setProperty('outline', '4px solid #a65d0c', 'important');
+        target.style.setProperty('outline-offset', '4px', 'important');
       });
       finding.a.element.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
     });
@@ -244,6 +259,7 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
 
   const sheet = shadow.querySelector<HTMLElement>('.sheet')!;
   const close = () => {
+    document.querySelectorAll('[data-signal-check-highlighted]').forEach(restoreHighlight);
     document.querySelectorAll('[data-signal-check-id]').forEach((node) => node.removeAttribute('data-signal-check-id'));
     host.remove();
   };

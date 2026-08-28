@@ -7,7 +7,7 @@
 
 * { box-sizing: border-box; }
 
-html { min-width: 360px; }
+html { width: 380px; min-width: 360px; }
 
 body {
   margin: 0;
@@ -71,7 +71,7 @@ h1 { font-size: 24px; line-height: 1.1; letter-spacing: -.025em; }
 
 .status-sheet { margin-top: 18px; padding: 12px 12px 14px; background: rgba(255,253,246,.92); border: 1px solid #8fa3a1; transform: rotate(.2deg); }
 .status-sheet h2 { margin-bottom: 7px; color: #526269; font: 700 12px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; }
-.status-sheet p { font-size: 14px; line-height: 1.45; }
+.status-sheet p { font-size: 16px; line-height: 1.45; }
 .status-sheet .error { color: #7b252d; }
 .status-sheet .success { color: #214f38; }
 
