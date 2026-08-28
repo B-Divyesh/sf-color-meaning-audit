@@ -1,55 +1,33 @@
-# Polish round 2 handoff — Signal Check
+# Review 3 handoff — Signal Check
 
 ## Outcome
 
-Repaired release candidate `10f7a9c243d7962a2b9173179ad7847ca9db6aa8` against every finding in `review-1.md` and `review-2.md`. The product remains a WXT/TypeScript MV3 browser extension with a static Vite site and retains its ruled lab-notebook identity.
+No product code was modified. The independent adversarial review is recorded in `.factory/review-3.md` and the release verdict is **FAIL**.
 
-The implementation is commit `2d33071` and is live at <https://color-meaning-audit.sociobot.in/>. The isolated sample is at <https://color-meaning-audit.sociobot.in/demo/?demo=1>.
+The blocking issue is semantic: the live demo calls service names a legend/status label and recommends them as an alternate cue, even though they do not state the meaning of the red/green dots. Two documentation/copy findings are also open: the hero does not use the required single audience-and-change sentence, and `.factory/copy-audit.md` omits current README prose.
 
-## What changed
+## What was verified
 
-- Rewrote the first screen so the job, audience, sample outcome, install action, and three facts are clear on a phone.
-- Completed the demo sandbox with persistent banner, demo-only storage, Reset, Start for real, query entry, offline warning, and protected 44 px controls.
-- Replaced the inadequate privacy claim test with a real packaged-extension run through the toolbar shortcut, capture, analysis, injection, visible result, and network interception.
-- Added full shipped-extension coverage for Deutan, Protan, and Tritan views.
-- Completed the 13-entry claims registry and exact tagged claim commands.
-- Completed real route titles, metadata, canonical/social tags, heading focus, Back/reload behavior, legal navigation, versioned footers, and HTTP 404 handling.
-- Updated visitor and README language, the complete copy/terminology audit, demo documentation, version `1.0.2`, and the verb-first 77-character catalog description.
-- Preserved the original notebook artwork and product-specific visual system; no generic template or replacement asset was introduced.
+- Cold published-site checks at 390x844 and 1440x900: job, audience, primary sample action, no horizontal overflow, and no console errors.
+- The live `/demo/?demo=1` sandbox: open real overlay, persistent banner, Reset, Start for real, `demo:` isolation, retained non-demo sentinel, and same-origin-only request observation.
+- Offline demo behavior through the tagged clean-clone claim test.
+- All 13 exact `.factory/claims.json` commands from a new clone at `/tmp/signal-check-review-3-xH9TW9`: passed.
+- `npm test` from that clean clone: passed (typecheck, 5 unit tests, build/package validation, and Playwright).
+- Published route metadata, 404, direct/deep routes, focus, Back behavior, link crawl, headers/footer, and visual identity.
 
-The finding-by-finding change and evidence map is in `.factory/polish-2.md`.
-
-## Verification
-
-From a clean clone at `/tmp/signal-check-clean-8QhVQe`:
-
-- `npm ci` — passed; 263 packages, zero vulnerabilities.
-- `npm test` — passed: TypeScript, 2 Vitest files / 5 tests, production extension/site/ZIP build, Playwright 26 passed / 14 intentional mobile claim skips.
-- Every exact command in `.factory/claims.json` — all 13 passed independently.
-- Build output — extension 27.26 KB total; site CSS 14.07 KB (4.02 KB gzip); largest initial route JS 9.73 KB (4.13 KB gzip); mobile hero WebP 24.81 KB.
-
-After deployment:
-
-- `PLAYWRIGHT_BASE_URL=https://color-meaning-audit.sociobot.in npm run test:e2e -- tests/e2e/site.spec.ts` — 18 passed / 8 intentional mobile claim skips.
-- `verify-url.sh` on live home and demo — HTTP 200, zero console/page errors, correct title/lang/one `h1`/`main`, no missing alt text or button names.
-- Axe 4.10.3 on all five live routes — zero violations.
-- Unknown live route — HTTP 404 with the designed recovery page.
-- Lighthouse mobile — 100 performance, 100 accessibility, 100 best practices, 100 SEO; FCP 0.9 s, LCP 1.1 s, TBT 70 ms, CLS 0.
-- Cold desktop and 390 px screenshots were opened and inspected. The sample banner/actions remain visible, the overlay stays below them, and no horizontal overflow appears.
-
-Evidence is committed under `.factory/evidence/polish-2/`.
-
-## Run, test, and deploy
+## How to reproduce
 
 ```sh
+git clone /work/repo /tmp/signal-check-review-3-recheck
+cd /tmp/signal-check-review-3-recheck
 npm ci
 npm test
-npm run build
-/opt/fleet/lib/deploy-static.sh color-meaning-audit dist/site
 ```
 
-`npm run build` emits `dist/extension/chrome-mv3/`, `dist/site/`, and `dist/site/downloads/signal-check-chrome.zip`.
+Then open <https://color-meaning-audit.sociobot.in/demo/?demo=1> at 390px. The already-open dialog demonstrates F-3-1: it calls “Billing handshake” and “Token refresh” labels/legend text although neither says the state carried by the dots.
 
-## Known gaps
+## Known gaps / next steps
 
-None. Every recorded finding is closed and the deployed site passed the cold verification loop.
+1. Repair `labelFor()`/result wording and add packaged-extension tests for unrelated row text versus actual Ready/Blocked labels.
+2. Replace the two hero support sentences with one <=22-word audience-and-change sentence.
+3. Regenerate `.factory/copy-audit.md` from every current README sentence.
