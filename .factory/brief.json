@@ -1,0 +1,10 @@
+{
+  "slug": "color-meaning-audit",
+  "title": "Signal Check",
+  "artifact_class": "browser-extension",
+  "user": "Color-blind knowledge workers who need to tell whether a chart, status dashboard, or UI uses color as the only carrier of meaning before they act on it.",
+  "smallest_useful_product": "Browser extension that samples the visible page/screenshot, detects repeated color-only legend/status distinctions, simulates selected deficiencies locally, and overlays a plain-language warning with label/shape/position alternatives.",
+  "success_measure": "In a 20-chart benchmark, users identify at least 85% of intentionally color-only distinctions after using the overlay, versus their baseline.",
+  "monetization": "free",
+  "constraints": "Simulation is advisory, not a personalized prescription; screenshots may contain sensitive data and must stay local; overlays must be keyboard and screen-reader accessible."
+}
