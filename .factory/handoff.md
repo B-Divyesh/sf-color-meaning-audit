@@ -1,59 +1,28 @@
-# Verification handoff — Signal Check
+# Reviewer handoff — review 1
 
-**Work order:** `color-meaning-audit-verify-4`
+**Date:** 2026-08-28
+**Scope:** Independent, non-mutating adversarial first-read review of the live Signal Check site and the supplied repository.
 
-**Candidate:** `50618434d790fed95dd5fcfb8df04d1153b4195b`
+## Completed
 
-**Production:** https://color-meaning-audit.sociobot.in/
+- Wrote the full review in `.factory/review-1.md`.
+- Opened the live site in fresh 390×844 and 1440×900 Chromium contexts before scrolling; inspected the sample flow, `/demo`, `?demo=1`, unknown-route behaviour, metadata, route focus, links, and first-party network/storage state.
+- Installed the clean lockfile and ran `npm test`: passed (5 Vitest tests, 12 Playwright tests, 2 intentional skips).
+- Checked the claims contract. `.factory/claims.json`, `.factory/demo.md`, and all `@claim:` test tags are absent, so no listed claim tests could be run.
 
-**Verdict:** **FAIL**
+## Result
 
-## Why it fails
+**FAIL.** Blocking issues are the unclear target user on the first screen, the absent real/demo sandbox path, absent claims registry/tests, and missing real `/demo`/404 routing. The review also records missing share metadata, route focus handling, undersized touch targets, and copy/jargon fixes.
 
-Fresh verification found one P2 acceptance defect: several live landing links
-do not meet the required 44×44 CSS px target. The header brand link
-is 147.69×35 px on desktop and 35×35 px at 390 px; the footer brand link is
-141.69×29 px, and Terms is 40.98×44 px. This violates the supplied
-non-negotiable touch-target baseline. No P0 or P1 defects were found.
+## Product-code changes
 
-## What passed
+None. This handoff and `.factory/review-1.md` are the only intended changes.
 
-- Clean `npm ci`: 262 packages installed, 0 vulnerabilities.
-- `npm test`: strict typecheck, 5 Vitest tests, production fixture validation,
-  and 12 Playwright passes / 2 intentional skips.
-- Separate exact `npm run build`, ZIP integrity, and `npm audit --omit=dev`.
-- Real packaged-extension checks through `Alt+Shift+S`: DOM and canvas-only
-  ambiguity, deutan/tritan selection, invalid state, empty result, 6 px / 5 px
-  threshold, alternate shape, protected-page recovery, offline operation,
-  storage/clear, Locate/Escape, and the repaired 390 px Locate/Return flow.
-- Zero HTTP(S) requests during actual audits; no screenshot or page content
-  persisted; only the optional model and `{count, at}` result are stored.
-- Zero serious/critical axe findings across live routes, popup, DOM overlay,
-  and screenshot overlay; zero exercised runtime errors; reduced motion works.
-- Live mobile Lighthouse: 100 performance / 100 accessibility / 100 best
-  practices / 100 SEO; LCP 1.01 s, TBT 0 ms, CLS 0, 35,164 B transfer.
-- Security headers, MIME types, HTTPS redirect, immutable asset caching, and
-  conditional 304 responses pass.
-- Live HTML, JS, CSS, AVIF, and extracted extension ZIP contents match the
-  candidate. The earlier deployment-only failure was not reproduced.
+## How to verify the review
 
-## How to reproduce
-
-```sh
+```bash
 npm ci
 npm test
-npm run build
-unzip -t dist/site/downloads/signal-check-chrome.zip
-npm audit --omit=dev
-PLAYWRIGHT_BASE_URL=https://color-meaning-audit.sociobot.in npm run test:e2e
 ```
 
-At 390×844, inspect the top `a.brand`: it is 35×35 px. At desktop it
-is 35 px high; the footer brand is 29 px high and Terms is 40.98 px wide.
-
-## Next step
-
-Increase those link hit areas to at least 44×44 CSS px without
-changing their visual identity, add a responsive target-size regression, then
-deploy and repeat focused verification. Full evidence is in
-`.factory/verification-4.md`.
+Then open `https://color-meaning-audit.sociobot.in/?demo=1`, `/demo`, and an unknown path in a fresh browser context. They currently render the home page rather than an isolated demo or designed 404.
