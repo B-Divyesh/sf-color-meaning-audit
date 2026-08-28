@@ -109,6 +109,9 @@ export async function analyzeScreenshot(dataUrl: string, model: VisionModel): Pr
 export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel): AuditResult {
   const rootId = 'signal-check-overlay-host';
   const oldHost = document.getElementById(rootId);
+  const focusedBeforeOpen = document.activeElement instanceof HTMLElement && document.activeElement !== oldHost
+    ? document.activeElement
+    : null;
   if (oldHost) oldHost.remove();
   const restoreHighlight = (node: Element) => {
     const element = node as HTMLElement;
@@ -288,6 +291,7 @@ export function scanAndShowOverlay(palette: PaletteFinding[], model: VisionModel
     document.querySelectorAll('[data-signal-check-highlighted]').forEach(restoreHighlight);
     document.querySelectorAll('[data-signal-check-id]').forEach((node) => node.removeAttribute('data-signal-check-id'));
     host.remove();
+    focusedBeforeOpen?.focus({ preventScroll: true });
   };
   shadow.querySelector('.close')!.addEventListener('click', close);
   shadow.addEventListener('keydown', (event) => { if ((event as KeyboardEvent).key === 'Escape') close(); });
