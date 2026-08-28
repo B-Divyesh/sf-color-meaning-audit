@@ -4,7 +4,9 @@ const liveBaseURL = process.env.PLAYWRIGHT_BASE_URL;
 
 export default defineConfig({
   testDir: './tests/e2e',
-  fullyParallel: true,
+  // Extension profiles and service workers are more reliable in one Chromium worker.
+  fullyParallel: false,
+  workers: 1,
   reporter: 'line',
   use: {
     baseURL: liveBaseURL || 'http://127.0.0.1:4173',

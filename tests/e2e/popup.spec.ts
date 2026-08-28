@@ -32,7 +32,11 @@ async function expectProgress(popup: Page, visible: boolean): Promise<void> {
   }
 }
 
-test('packaged popup shows progress only while a check is pending', async () => {
+test.beforeEach(({}, testInfo) => {
+  if (testInfo.project.name === 'mobile') test.skip(true, 'The packaged extension popup is verified in the desktop Chromium profile.');
+});
+
+test('@claim:extension-clear clears the stored last result in one action', async () => {
   const { context, popup } = await openPackagedPopup();
   try {
     // Ready state.
@@ -91,6 +95,7 @@ test('packaged popup shows progress only while a check is pending', async () => 
     await popup.getByRole('button', { name: 'Clear last check' }).focus();
     await popup.keyboard.press('Enter');
     await expect(popup.getByText('Cleared.', { exact: false })).toBeVisible();
+    expect(await popup.evaluate(async () => chrome.storage.local.get('lastResult'))).toEqual({});
     await expectProgress(popup, false);
 
     await popup.evaluate(() => {
@@ -102,6 +107,30 @@ test('packaged popup shows progress only while a check is pending', async () => 
     // Protected-page error state.
     await expect(popup.getByText('Couldn’t check this page.', { exact: false })).toBeVisible();
     await expectProgress(popup, false);
+  } finally {
+    await context.close();
+  }
+});
+
+test('@claim:extension-local-storage saves the chosen view and last result in extension-local storage', async () => {
+  const { context, popup } = await openPackagedPopup();
+  try {
+    await popup.getByRole('radio', { name: /Protan/i }).check();
+    await popup.evaluate(() => {
+      chrome.tabs.query = async () => [{ id: 7, windowId: 1, url: 'https://example.test/' } as chrome.tabs.Tab];
+      chrome.tabs.captureVisibleTab = async () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 8;
+        canvas.height = 8;
+        return canvas.toDataURL('image/jpeg');
+      };
+      chrome.scripting.executeScript = async () => [{ frameId: 0, result: { count: 2, domCount: 1, paletteCount: 1 } }] as chrome.scripting.InjectionResult[];
+    });
+    await popup.getByRole('button', { name: 'Check this page' }).click();
+    await expect(popup.getByText('2 signals to verify.', { exact: false })).toBeVisible();
+    const saved = await popup.evaluate(async () => chrome.storage.local.get(['visionModel', 'lastResult']));
+    expect(saved.visionModel).toBe('protan');
+    expect((saved.lastResult as { count: number }).count).toBe(2);
   } finally {
     await context.close();
   }

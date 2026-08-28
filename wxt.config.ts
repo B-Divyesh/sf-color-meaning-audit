@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: {
     name: 'Signal Check',
     description: 'Find page signals that may rely on color alone, then learn what alternate cue to seek.',
-    version: '1.0.0',
+    version: '1.0.1',
     permissions: ['activeTab', 'scripting', 'storage'],
     action: { default_title: 'Check color meaning on this page' },
     commands: {

@@ -9,16 +9,31 @@ async function showOverlay(page: Page, palette: PaletteFinding[], model: VisionM
   }, { source: scanAndShowOverlay.toString(), findings: palette, comparison: model });
 }
 
-test('screenshot palette findings expose valid named swatches with no serious axe findings', async ({ page }) => {
+test.beforeEach(({}, testInfo) => {
+  if (testInfo.project.name === 'mobile' && testInfo.title.includes('@claim:')) {
+    test.skip(true, 'Claim contracts run once in the desktop clean-state sandbox.');
+  }
+});
+
+test('@claim:extension-check-notes opens accessible check notes with an alternate cue', async ({ page }) => {
   await page.goto('/');
   await showOverlay(page, [{ colorA: '#c04040', colorB: '#409060', confidence: 61, share: 48 }], 'deutan');
 
   const overlay = page.locator('#signal-check-overlay-host');
   await expect(overlay.locator('.swatches')).toHaveAttribute('role', 'img');
   await expect(overlay.getByRole('img', { name: 'Compared colors #c04040 and #409060' })).toBeVisible();
+  await expect(overlay.getByText(/Seek a label, shape, pattern, or written value/i)).toBeVisible();
 
   const results = await new AxeBuilder({ page }).include('#signal-check-overlay-host').analyze();
   expect(results.violations.filter(({ impact }) => ['serious', 'critical'].includes(impact || ''))).toEqual([]);
+});
+
+test('@claim:extension-local-check uses no HTTP requests while it builds check notes', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', (request) => requests.push(request.url()));
+  await page.setContent('<main><span class="dot" style="display:block;width:24px;height:24px;background:rgb(192,64,64)"></span><span class="dot" style="display:block;width:24px;height:24px;background:rgb(64,144,96)"></span></main>');
+  await showOverlay(page, [], 'deutan');
+  expect(requests.filter((url) => /^https?:/.test(url))).toEqual([]);
 });
 
 test('narrow Locate keeps the highlighted source visible and lets people return to the notes', async ({ page }, testInfo) => {

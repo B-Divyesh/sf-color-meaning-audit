@@ -5,6 +5,7 @@ type StaticWebAppConfig = {
   globalHeaders: Record<string, string>;
   routes: Array<{ route: string; headers?: Record<string, string> }>;
   mimeTypes: Record<string, string>;
+  responseOverrides: Record<string, { rewrite: string; statusCode: number }>;
 };
 
 describe('static host caching policy', () => {
@@ -18,5 +19,6 @@ describe('static host caching policy', () => {
       headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
     });
     expect(config.mimeTypes['.avif']).toBe('image/avif');
+    expect(config.responseOverrides['404']).toEqual({ rewrite: '/404.html', statusCode: 404 });
   });
 });

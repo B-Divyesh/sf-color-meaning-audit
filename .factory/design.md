@@ -63,3 +63,5 @@ The landing hero uses one original generated editorial still: a top-down lab not
 - Negative list: no people, no hands, no readable text, no letters, no logos, no watermark, no neon gradient, no glossy 3D, no medical imagery, no fake browser UI
 
 Generated with the factory Azure image model (`factory-image`) on 2026-08-28 using `/opt/fleet/lib/gen-image.sh`. The selected output is original project artwork under the repository MIT license. Source PNG and prompt sidecar are retained in `assets/src/`; optimized WebP is shipped in the static site.
+
+The 1200×630 social card is a hand-composed crop of that same generated notebook still. The 180px Apple touch icon is a resized export of the hand-authored project mark. Neither introduces a third-party asset.
