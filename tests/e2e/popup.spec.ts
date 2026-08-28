@@ -290,6 +290,22 @@ test('@claim:extension-local-check runs the packaged visible-page check without 
   }
 });
 
+test('@claim:extension-offline completes a visible-page check while offline', async () => {
+  const check = await openRealCheckFixture();
+  try {
+    await loadSignalPair(check.fixture, 'rgb(64, 144, 96)', 'rgb(192, 64, 64)', null);
+    await check.context.setOffline(true);
+    await activateFixtureAndCheck(check);
+
+    const overlay = check.fixture.locator('#signal-check-overlay-host');
+    await expect(overlay.getByRole('heading', { name: /signals? to verify/i })).toBeVisible();
+    await expect(overlay.getByText('No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.', { exact: true })).toBeVisible();
+  } finally {
+    await check.context.setOffline(false);
+    await check.context.close();
+  }
+});
+
 test('@claim:color-vision-views checks every selectable view through the packaged extension', async () => {
   const check = await openRealCheckFixture();
   const cases = [

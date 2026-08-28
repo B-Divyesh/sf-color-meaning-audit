@@ -77,6 +77,13 @@
     "sandbox": "fresh packaged extension profile; open a same-origin visible-page fixture, run the real popup capture, screenshot analysis, and script injection, then assert the check-note result and zero HTTP(S) requests during the operation"
   },
   {
+    "id": "extension-offline",
+    "claim": "Visible-page checks still work while offline",
+    "where": "extension popup offline state",
+    "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-offline'",
+    "sandbox": "fresh packaged extension profile and a loaded sample page; set the browser context offline, run the real popup check, and assert the check notes open"
+  },
+  {
     "id": "extension-local-storage",
     "claim": "The selected view and last result stay in browser-local extension storage",
     "where": "privacy policy, README",
