@@ -8,6 +8,11 @@ type StaticWebAppConfig = {
   responseOverrides: Record<string, { rewrite: string; statusCode: number }>;
 };
 
+type PackageLock = {
+  lockfileVersion: number;
+  packages: Record<string, { version?: string }>;
+};
+
 describe('static host caching policy', () => {
   it('revalidates documents while keeping fingerprinted build assets immutable', async () => {
     const source = await readFile(new URL('../../site/public/staticwebapp.config.json', import.meta.url), 'utf8');
@@ -39,6 +44,13 @@ describe('plain project copy', () => {
     expect(explanation.split(/\s+/)).toHaveLength(14);
   });
 
+  it('does not make an untestable public claim about artwork origin', async () => {
+    const landing = await readFile(new URL('../../site/index.html', import.meta.url), 'utf8');
+
+    expect(landing).not.toMatch(/hero artwork is original project artwork/i);
+    expect(landing).not.toMatch(/original project artwork/i);
+  });
+
   it('closes every round-five plain-language finding', async () => {
     const [landing, readme, claimsSource] = await Promise.all([
       readFile(new URL('../../site/index.html', import.meta.url), 'utf8'),
@@ -63,5 +75,22 @@ describe('plain project copy', () => {
     expect(description).toMatch(/^Check\b/);
     expect(description.length).toBeLessThanOrEqual(120);
     expect(description).not.toContain('\n');
+  });
+});
+
+describe('reproducible test dependencies', () => {
+  it('pins the Playwright type graph in the committed npm lockfile', async () => {
+    const [packageSource, lockSource] = await Promise.all([
+      readFile(new URL('../../package.json', import.meta.url), 'utf8'),
+      readFile(new URL('../../package-lock.json', import.meta.url), 'utf8'),
+    ]);
+    const packageJson = JSON.parse(packageSource) as { devDependencies: Record<string, string>; overrides: Record<string, string> };
+    const lock = JSON.parse(lockSource) as PackageLock;
+
+    expect(lock.lockfileVersion).toBe(3);
+    expect(packageJson.devDependencies['@playwright/test']).toBe('1.58.2');
+    expect(packageJson.overrides['playwright-core']).toBe('1.58.2');
+    expect(lock.packages['node_modules/playwright-core']?.version).toBe('1.58.2');
+    expect(Object.keys(lock.packages).filter((name) => name.endsWith('/playwright-core'))).toEqual(['node_modules/playwright-core']);
   });
 });

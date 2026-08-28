@@ -90,9 +90,25 @@ test('@claim:demo-offline reloads the sample after its first visit', async ({ co
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByRole('heading', { name: 'A warning is already open.' })).toBeVisible();
-  await expect(page.locator('#signal-check-overlay-host').getByRole('dialog')).toBeVisible();
+  const overlay = page.locator('#signal-check-overlay-host').getByRole('dialog');
+  await expect(overlay).toBeVisible();
+  await expect(overlay).toBeFocused();
   await expect(page.getByText('Demo — sample data, nothing is saved to your real checks.')).toBeVisible();
   await expect(page.getByText('No nearby text label was found. Look for a shape, line pattern, position, or written value before acting.', { exact: true })).toBeVisible();
+  await expect(page.locator('.site-header')).toBeVisible();
+  await expect(page.locator('.skip-link')).toHaveAttribute('href', '#main');
+  await expect(page.locator('.site-footer')).toBeVisible();
+  await expect(page.locator('.site-footer').getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy/');
+  await expect(page.locator('.site-footer').getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms/');
+  await expect(page).toHaveTitle('Demo — Signal Check');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://color-meaning-audit.sociobot.in/demo/');
+  await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="icon"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+  const locate = overlay.getByRole('button', { name: 'Locate these signals' });
+  await expect(locate).toBeEnabled();
+  await locate.click();
+  await expect(page.locator('[data-signal-check-highlighted]')).toHaveCount(2);
   await context.setOffline(false);
 });
 
