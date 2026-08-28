@@ -3,6 +3,11 @@ import { resolve } from 'node:path';
 
 const site = resolve('dist/site');
 const index = await readFile(resolve(site, 'index.html'), 'utf8');
+await readFile(resolve(site, 'demo/index.html'), 'utf8');
+await readFile(resolve(site, 'install/index.html'), 'utf8');
+await readFile(resolve(site, 'privacy/index.html'), 'utf8');
+await readFile(resolve(site, 'terms/index.html'), 'utf8');
+await readFile(resolve(site, '404.html'), 'utf8');
 const config = JSON.parse(await readFile(resolve(site, 'staticwebapp.config.json'), 'utf8'));
 const assets = await readdir(resolve(site, 'assets'));
 

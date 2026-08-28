@@ -13,7 +13,7 @@ Try the isolated sample at [`/demo/?demo=1`](https://color-meaning-audit.sociobo
 
 ## Run and test
 
-Node.js 22+ and npm 10+ are required. Chromium for Playwright is supplied by the factory image.
+Node.js 22+ and npm 10+ are required. The factory test environment already includes Chromium. In another environment, install it before running browser tests.
 
 ```bash
 npm ci
@@ -21,6 +21,7 @@ npm run dev          # extension development
 npm run dev:site     # site development
 npm test             # typecheck, unit tests, clean build, browser and axe tests
 npm run build        # creates dist/extension and dist/site
+npx playwright install chromium  # only when Chromium is not already installed
 ```
 
 On Linux, the test command opens a test browser and uses the extension button. This grants the same temporary page access as a user click.
@@ -36,7 +37,7 @@ On Linux, the test command opens a test browser and uses the extension button. T
 5. Open a chart or status dashboard.
 6. Choose Signal Check from the toolbar, then choose **Check this page**.
 
-The extension stores the selected view and last result in browser-local extension storage. It does not request network resources while it builds check notes. See the [privacy policy](site/privacy/index.html) and [terms](site/terms/index.html).
+The extension saves the selected view and last result only in this browser. It does not contact a server while it builds check notes. See the [privacy policy](site/privacy/index.html) and [terms](site/terms/index.html).
 
 ## Claims and demo
 
@@ -44,8 +45,8 @@ Every visitor-facing claim appears in [.factory/claims.json](.factory/claims.jso
 
 ## Deploy
 
-Deploy `dist/site` as the static site for `https://color-meaning-audit.sociobot.in`. The work order performs deployment. `staticwebapp.config.json` supplies headers, route fallback, and the designed 404 response.
+Deploy `dist/site` as the static site for `https://color-meaning-audit.sociobot.in`. The work order performs deployment. The static host config adds security settings and sends unknown addresses to the designed 404 page.
 
-See [.factory/brief.json](.factory/brief.json) for scope, [.factory/design.md](.factory/design.md) for design provenance, and [.factory/handoff.md](.factory/handoff.md) for verification.
+See [.factory/brief.json](.factory/brief.json) for scope, [.factory/design.md](.factory/design.md) for design sources, and [.factory/handoff.md](.factory/handoff.md) for verification.
 
 Licensed under the [MIT License](LICENSE).

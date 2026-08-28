@@ -13,6 +13,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         demo: resolve(import.meta.dirname, 'demo/index.html'),
+        install: resolve(import.meta.dirname, 'install/index.html'),
         privacy: resolve(import.meta.dirname, 'privacy/index.html'),
         terms: resolve(import.meta.dirname, 'terms/index.html'),
         notFound: resolve(import.meta.dirname, '404.html'),

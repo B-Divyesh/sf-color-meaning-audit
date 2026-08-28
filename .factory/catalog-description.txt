@@ -1,1 +1,1 @@
-Check charts and dashboards for color-only meaning before you act.
+Check color-only chart and dashboard signals before you act.

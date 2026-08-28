@@ -30,7 +30,31 @@ describe('plain project copy', () => {
 
     expect(readme).toContain(explanation);
     expect(readme).not.toMatch(/\bXvfb\b/);
+    expect(readme).toContain('The factory test environment already includes Chromium.');
+    expect(readme).toContain('The extension saves the selected view and last result only in this browser.');
+    expect(readme).toContain('It does not contact a server while it builds check notes.');
+    expect(readme).not.toContain('browser-local extension storage');
+    expect(readme).not.toContain('route fallback');
+    expect(readme).not.toContain('design provenance');
     expect(explanation.split(/\s+/)).toHaveLength(14);
+  });
+
+  it('closes every round-five plain-language finding', async () => {
+    const [landing, readme, claimsSource] = await Promise.all([
+      readFile(new URL('../../site/index.html', import.meta.url), 'utf8'),
+      readFile(new URL('../../README.md', import.meta.url), 'utf8'),
+      readFile(new URL('../../.factory/claims.json', import.meta.url), 'utf8'),
+    ]);
+
+    expect(landing).toContain('Visible-page checks stay in your browser');
+    expect(landing).toContain('<h3>Use a non-color cue</h3>');
+    expect(landing).toContain('<p class="eyebrow">An isolated sample check</p>');
+    expect(landing).toContain('<p class="eyebrow">What this check can miss</p>');
+    expect(landing).not.toContain('A safe first check');
+    expect(landing).not.toContain('Honest limits');
+    expect(claimsSource).toContain('"claim": "Visible-page checks stay in your browser"');
+    expect(readme).not.toContain('Chromium for Playwright is supplied by the factory image.');
+    expect(readme).not.toContain('request network resources');
   });
 
   it('keeps the catalog description verb-first and within 120 characters', async () => {

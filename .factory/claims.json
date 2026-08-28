@@ -36,10 +36,10 @@
   },
   {
     "id": "demo-exit",
-    "claim": "Starting for real discards sample state",
-    "where": "demo banner, demo documentation",
+    "claim": "Starting for real discards sample state, opens the install steps, and downloads the extension ZIP",
+    "where": "demo banner, install page, demo documentation",
     "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:demo-exit'",
-    "sandbox": "fresh browser context; enter demo, choose Start for real, and assert the demo: key is absent"
+    "sandbox": "fresh browser context; enter demo, choose Start for real, then assert the demo: key is absent, /install/ is visible, and a valid extension ZIP downloads"
   },
   {
     "id": "demo-first-party",
@@ -71,8 +71,8 @@
   },
   {
     "id": "extension-local-check",
-    "claim": "Visible-page checking does not request network resources",
-    "where": "privacy policy, README",
+    "claim": "Visible-page checks stay in your browser",
+    "where": "landing quick facts, privacy policy, README",
     "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-check'",
     "sandbox": "fresh packaged extension profile; open a same-origin visible-page fixture, run the real popup capture, screenshot analysis, and script injection, then assert the check-note result and zero HTTP(S) requests during the operation"
   },
@@ -85,7 +85,7 @@
   },
   {
     "id": "extension-local-storage",
-    "claim": "The selected view and last result stay in browser-local extension storage",
+    "claim": "The selected view and last result stay only in this browser",
     "where": "privacy policy, README",
     "test": "npm run prepare:test && npm run test:e2e -- --grep '@claim:extension-local-storage'",
     "sandbox": "fresh packaged extension profile; select a view, complete a mocked visible-tab check, and inspect chrome.storage.local"

@@ -6,14 +6,26 @@ const state = document.querySelector<HTMLElement>('#demo-state')!;
 const reset = document.querySelector<HTMLButtonElement>('#reset-demo')!;
 const startReal = document.querySelector<HTMLAnchorElement>('#start-real')!;
 const banner = document.querySelector<HTMLElement>('.demo-banner')!;
+const overlayObserver = new MutationObserver(positionOverlay);
 
 function positionOverlay(): void {
   const overlay = document.querySelector<HTMLElement>('#signal-check-overlay-host');
+  if (overlay?.hasAttribute('data-minimized')) {
+    overlay.style.removeProperty('top');
+    return;
+  }
   overlay?.style.setProperty('top', `${Math.ceil(banner.getBoundingClientRect().bottom + 8)}px`);
+}
+
+function watchOverlay(): void {
+  overlayObserver.disconnect();
+  const overlay = document.querySelector<HTMLElement>('#signal-check-overlay-host');
+  if (overlay) overlayObserver.observe(overlay, { attributes: true, attributeFilter: ['data-minimized'] });
 }
 
 function runSample(model: VisionModel = 'deutan'): void {
   scanAndShowOverlay([], model);
+  watchOverlay();
   positionOverlay();
   localStorage.setItem(demoKey, JSON.stringify({ model, openedAt: Date.now() }));
   state.textContent = 'Sample status dashboard loaded.';
@@ -35,5 +47,6 @@ reset.addEventListener('click', () => {
 startReal.addEventListener('click', () => localStorage.removeItem(demoKey));
 new ResizeObserver(positionOverlay).observe(banner);
 window.addEventListener('resize', positionOverlay);
+window.addEventListener('scroll', positionOverlay, { passive: true });
 
 runSample();
