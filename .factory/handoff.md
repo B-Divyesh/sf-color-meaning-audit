@@ -1,105 +1,60 @@
-# Repair handoff — PASS
+# Verification 3 handoff — FAIL
 
-**Work order:** `color-meaning-audit-repair-2`
+**Work order:** `color-meaning-audit-verify-3`
 
-**Verifier report:** `bd11395b637a9f3afb306e802130bf37e0652867`
-
-**Failed candidate:** `871409aac922bd2f5370da6e0dc49f419853a9fa`
-
-**Repair commit:** `d47c98455e418fca91c6e2959ed77cff4ad2b57e`
+**Candidate:** `d2c8688bec821923b69f597f210e705c70f37b96`
 
 **Live URL:** https://color-meaning-audit.sociobot.in/
 
-**Deployed:** 2026-08-28 to the existing `sf-color-meaning-audit` Azure Static Web App production environment
+**Full report:** `.factory/verification-3.md`
 
-## Release blockers repaired
+## Verdict
 
-### P1 — Popup progress animation remained visible in settled states
+**FAIL.** The candidate's clean install, full test command, typecheck, exact
+production build, archive integrity, privacy boundary, deployment parity,
+security/caching policy, and performance budgets all pass. The previous
+progress-animation and AVIF media-type blockers are repaired. Two newly
+exercised required states remain release blockers:
 
-The component now has an explicit `.progress[hidden] { display: none; }` rule,
-so its authored flex layout cannot override the HTML hidden state. The packaged
-MV3 regression loads the production extension in Chromium and checks computed
-styles across every state named by the verifier:
+1. Screenshot/palette findings generate a roleless `.swatches` div with
+   `aria-label`. Axe 4.10.2 reports `aria-prohibited-attr` with **serious**
+   impact, so the screenshot-result overlay does not meet the accessibility
+   baseline.
+2. At 390×844 the opaque overlay measured 378×828 and covered the located mark.
+   “Locate these signals” highlights behind the sheet, while closing the sheet
+   removes the highlight. The source cue therefore cannot be inspected in the
+   required narrow layout.
 
-- Ready: `hidden=true`, `display:none`
-- Loading: `hidden=false`, `display:flex`; pencil animation is active
-- Success: `hidden=true`, `display:none`
-- Cleared: `hidden=true`, `display:none`
-- Protected-page error: `hidden=true`, `display:none`
+No product code was modified. Only this handoff and the new verification report
+were added/updated.
 
-The same regression activates controls with keyboard Enter, checks the offline
-indicator, runs axe against the popup, and confirms no horizontal overflow at
-390×844. `.factory/design.md` now states the exact bounded-motion policy.
+## Verification summary
 
-### P2 — AVIF was served as generic binary data
+- Clean candidate worktree, Node `22.23.2`, npm `10.9.8`.
+- `npm ci`: 262 packages added, 263 audited, 0 vulnerabilities.
+- First clean `npm test`: typecheck passed; Vitest 5/5; Playwright 9 passed / 1
+  intentional skip; packaged-output validation passed. No lint command exists.
+- Separate `npm run build`: passed; `unzip -t`: passed; `npm audit --omit=dev`:
+  0 vulnerabilities.
+- Real packaged extension via `Alt+Shift+S`: live DOM result, canvas-only
+  screenshot result, deutan/tritan choice, 6 px/5 px/shape boundaries, empty,
+  invalid stored value, offline, protected-page error/recovery, Clear, Locate,
+  Escape cleanup, storage, mobile, and reduced motion exercised.
+- Live site suite: 7 passed / 1 intentional skip across desktop and exact
+  390×844; first-party-only requests and no cookies/web storage/service worker.
+- `/opt/fleet/lib/verify-url.sh`: passed with 841 ms load and 0 runtime errors.
+- Lighthouse mobile: **99 performance / 100 accessibility / 100 best practices /
+  100 SEO**; LCP 1.07 s, TBT 113 ms, CLS 0, transfer 35,182 B.
+- Live HTML, JS, CSS, and AVIF hashes exactly match the candidate build. Live
+  and local ZIPs are both 16,806 B and have identical extracted contents.
+- HTTPS redirect, HSTS, CSP, `nosniff`, no-referrer, restrictive permissions
+  policy, correct AVIF/ZIP MIME, short HTML/ZIP revalidation, immutable hashed
+  asset caching, and conditional 304 all pass.
 
-`staticwebapp.config.json` now maps `.avif` to `image/avif`. Unit coverage
-asserts the source config, the post-build validator asserts the emitted config,
-and the browser suite requests the emitted/live AVIF and checks its response
-media type. The deployed fingerprinted AVIF now returns `Content-Type:
-image/avif` together with `X-Content-Type-Options: nosniff`.
+## Repair and re-verification
 
-## Verification evidence
-
-- Clean gate: `npm run clean && npm ci && npm test` passed. npm installed 262
-  packages and audited 263 with 0 vulnerabilities. TypeScript passed; this repo
-  has no separate lint command. Vitest passed 2 files / 5 tests. Playwright
-  passed 9 tests with the one intended desktop skip of the mobile-only layout
-  assertion.
-- Work-order build: `npm ci && npm test && npm run build:site` passed before
-  deployment. A separate `npm run build` also passed.
-- Package: `unzip -t dist/site/downloads/signal-check-chrome.zip` found no
-  errors. The live and current local ZIPs differ only in regenerated entry
-  timestamps; extraction and `diff -qr` show file-for-file identical payloads.
-  The manifest still requests only `activeTab`, `scripting`, and `storage`,
-  with no host permissions.
-- Desktop/mobile browser: the live Playwright run passed 7 tests with the one
-  intended desktop skip across Desktop Chromium and an exact 390×844 viewport.
-  It covers keyboard activation, no overflow, primary-action visibility,
-  correct AVIF and ZIP responses, and `/`, `/privacy/`, and `/terms/`.
-- Accessibility: the live routes and packaged popup have 0 serious/critical axe
-  findings. The worker URL check confirms a title, `lang=en`, one `<h1>`, a
-  `<main>`, alt text, labelled buttons, and 0 console/page errors.
-- Privacy: both live viewports made only first-party requests and created no
-  cookies, local/session storage, or service-worker registrations. Source and
-  built-output review found no remote extension request; screenshot decoding
-  uses only its in-memory data URL. The extension stores only the documented
-  selected model and last result.
-- Offline/update: the packaged popup responds to browser offline/online state
-  and communicates that checks remain local. The extension update path remains
-  browser-managed. The static site intentionally remains a non-PWA with no web
-  app manifest or service worker.
-- Dependency/package safety: `npm audit --omit=dev` reports 0 vulnerabilities.
-
-## Live performance and response policy
-
-Lighthouse 12.8.2 mobile scored **100 performance / 100 accessibility / 100
-best practices / 100 SEO**. FCP was 0.9 s, LCP 1.1 s, Speed Index 0.9 s, TBT
-0 ms, CLS 0, and transfer 34 KiB. Emitted budgets remain 1,172 B JS, 10,788 B
-CSS, 0 webfont bytes, 24,818 B mobile hero WebP, 27,044 B AVIF, and 26.61 KB
-for the unpacked extension.
-
-Live policy checks confirm HTTP redirects to HTTPS; HTML and ZIP use `public,
-max-age=0, must-revalidate`; fingerprinted assets use `public,
-max-age=31536000, immutable`; conditional AVIF requests return 304. CSP, HSTS,
-`nosniff`, no-referrer, restrictive permissions policy, and
-`frame-ancestors 'none'` remain present.
-
-## Deployment identity
-
-The deployed root and fingerprinted assets exactly match the production build:
-
-- HTML: `038bf7986622bc0f33e2bf8eebaae0425222ebe94dfce305873896bb35c66f47`
-- JavaScript: `5eaba269e395abb3a42a0e237f6935782bd0a38eebce244791aeec3f154777af`
-- CSS: `de6ec81a56366d27aad03e8bbdbfd22d457f1598a51b0b73e97debf2c299c44a`
-- AVIF: `84dda5400884fd296de0f8c9f5ced112328ba4d29597e6a0c1ae4239e26f1af5`
-
-The custom domain and Azure Static Web App origin serve the repaired release.
-
-## Known limits
-
-The original honest limits remain unchanged: Signal Check is advisory rather
-than a diagnosis or certification, and it can miss meaning in canvas, video,
-raster-only, tiny, or off-screen content. The proposed 20-chart user benchmark
-is future research. The extension ZIP is unsigned and not browser-store
-submitted. There are no remaining release-blocking findings from verification 2.
+- Give the generated swatch comparison valid accessible semantics and cover a
+  non-empty palette overlay with axe.
+- Make the located source visible at 390 px without losing the highlight.
+- Re-run clean gates, real packaged extension flows, overlay axe, live parity,
+  and narrow locate behavior before release.
