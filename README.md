@@ -24,7 +24,7 @@ It is advisory, not a medical test or accessibility certification. The extension
 npm install
 npm run dev          # WXT extension development
 npm run dev:site     # landing site development
-npm test             # unit + Chromium desktop/mobile + axe checks
+npm test             # clean dist + unit + packaged ZIP + Chromium desktop/mobile + axe checks
 npm run build        # exact production build command
 ```
 
@@ -53,6 +53,7 @@ See [privacy](site/privacy/index.html) and [terms](site/terms/index.html).
 ## Deployment
 
 Deploy `dist/site` as a static site at `https://color-meaning-audit.sociobot.in`. The repository does not manage DNS, hosting, billing, or store submission. The included `staticwebapp.config.json` sets security headers and static routing defaults.
+HTML and download responses revalidate on each request; Vite-fingerprinted `/assets/` files are served with a one-year immutable cache policy.
 
 ## Project notes
 

@@ -8,13 +8,17 @@ test('landing page explains and demonstrates the product', async ({ page }) => {
   await expect(page.getByRole('main')).toBeVisible();
   await expect(page.locator('h1')).toHaveCount(1);
 
-  await page.getByRole('button', { name: 'Deutan comparison' }).click();
+  await page.getByRole('button', { name: 'Deutan comparison' }).focus();
+  await page.keyboard.press('Enter');
   await expect(page.getByRole('button', { name: 'Deutan comparison' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('heading', { name: /colors now nearly merge/i })).toBeVisible();
 
   const response = await page.request.get('/downloads/signal-check-chrome.zip');
   expect(response.ok()).toBeTruthy();
-  expect((await response.body()).byteLength).toBeGreaterThan(10_000);
+  expect(response.headers()['content-type']).toContain('application/zip');
+  const archive = await response.body();
+  expect(archive.byteLength).toBeGreaterThan(10_000);
+  expect([...archive.subarray(0, 4)]).toEqual([0x50, 0x4b, 0x03, 0x04]);
 });
 
 test('main and legal pages have no serious accessibility findings', async ({ page }, testInfo) => {
